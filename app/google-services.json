@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "953178538456",
+    "project_id": "dang-geun-bread",
+    "storage_bucket": "dang-geun-bread.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953178538456:android:67dc699d4a0eb7452832ad",
+        "android_client_info": {
+          "package_name": "gachon.termproject.danggeun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953178538456-v8l7j9d74n2g0kll3a8v5ct741t8nnpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2wMJZ744_YChvTKMoMmvTnTt8Nf49IOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953178538456-v8l7j9d74n2g0kll3a8v5ct741t8nnpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
