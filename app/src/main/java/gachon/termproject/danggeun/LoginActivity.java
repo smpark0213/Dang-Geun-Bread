@@ -40,12 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         EditText pw = findViewById(R.id.login_editText_PW);
 
         // 이미 로그인한 경우 로그인 상태 유지
+/*
         fAuth = FirebaseAuth.getInstance();
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
+         */
 
         //login버튼을 눌럿을때
         button_login.setOnClickListener(new View.OnClickListener() {

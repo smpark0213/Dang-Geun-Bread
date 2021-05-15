@@ -3,6 +3,7 @@ package gachon.termproject.danggeun;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,26 +60,33 @@ public class Signup01Activity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.getException() instanceof FirebaseTooManyRequestsException) {
+
                             Toast.makeText(getApplicationContext(), "중복된 아이디입니다.", Toast.LENGTH_SHORT).show();
                         } else {
+
                             String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                            Log.e("c", errorCode);
 
                             switch (errorCode) {
                                 case "ERROR_INVALID_EMAIL":
                                     Toast.makeText(getApplicationContext(), "올바른 이메일 형식이 아닙니다.", Toast.LENGTH_SHORT).show();
+
                                     break;
 
                                 case "ERROR_WRONG_PASSWORD":
                                     Toast.makeText(getApplicationContext(), "중복된 아이디입니다.", Toast.LENGTH_SHORT).show();
+
                                     break;
 
                                 case "ERROR_USER_NOT_FOUND":
+
                                     //비밀번호 페이지로 이동
                                     identifier = email; // ID 전역변수 설정
                                     Intent intent = new Intent(getApplicationContext(), Signup02Activity.class);
                                     startActivity(intent);
                                     break;
                             }
+
                         }
 
                     }

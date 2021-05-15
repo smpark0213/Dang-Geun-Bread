@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "953178538456",
+    "firebase_url": "https://dang-geun-bread-default-rtdb.firebaseio.com",
     "project_id": "dang-geun-bread",
     "storage_bucket": "dang-geun-bread.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:953178538456:android:67dc699d4a0eb7452832ad",
+        "mobilesdk_app_id": "1:953178538456:android:685133cb83b1ec8c2832ad",
         "android_client_info": {
           "package_name": "gachon.termproject.danggeun"
         }
