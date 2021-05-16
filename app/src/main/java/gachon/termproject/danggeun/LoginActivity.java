@@ -2,6 +2,7 @@ package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +26,9 @@ import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth fAuth;
+    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private DocumentReference documentReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                 String ID = id.getText().toString().trim();
                 String PW = pw.getText().toString().trim();
 
-                // 아이디 비번 맞는지 확인하는 절차 코드 작성해야함
+
                 if (ID.length() > 0 && PW.length() > 0) {
                     fAuth.signInWithEmailAndPassword(ID, PW)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                                     if (task.isSuccessful()) {
                                         setUserInfo();
                                         Toast.makeText(getApplicationContext(), "로그인 성공!!", Toast.LENGTH_SHORT).show();
