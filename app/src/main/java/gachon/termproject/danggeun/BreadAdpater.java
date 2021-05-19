@@ -12,10 +12,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> {
-    // TODO : Firebase에서 해당 가게의 빵 정보 읽어오기
     private ArrayList<BreadInfo> breadData = null;
     private Context context;
 
