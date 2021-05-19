@@ -2,7 +2,6 @@ package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,16 +13,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -42,14 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         EditText pw = findViewById(R.id.login_editText_PW);
 
         // 이미 로그인한 경우 로그인 상태 유지
-/*
+
         fAuth = FirebaseAuth.getInstance();
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
+            Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
+
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
-         */
+
 
         //login버튼을 눌럿을때
         button_login.setOnClickListener(new View.OnClickListener() {
