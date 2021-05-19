@@ -18,8 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Dang_Geun_Bread">
-        <activity android:name=".CustomerActivity"></activity>
-        <activity android:name=".ManagerActivity" />
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,8 +33,12 @@
         <activity android:name=".Signup05Activity" />
         <activity android:name=".Signup06Activity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".CustomerActivity" />
+        <activity android:name=".ManagerActivity" />
         <activity android:name=".Bread_Detail" />
         <activity android:name=".MenuRegister" />
+        <activity android:name=".Cart" />
+        <activity android:name=".TimePickerActivity" />
 
         //구글맵 API 키
         <meta-data
