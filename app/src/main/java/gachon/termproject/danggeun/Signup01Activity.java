@@ -46,7 +46,7 @@ public class Signup01Activity extends AppCompatActivity {
                 //UserEmail에 이메일을 받아와서 여차저차함
                 if (TextUtils.isEmpty(UserEmail))
                     Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                // Email 중복여부 확인
+                    // Email 중복여부 확인
                 else
                     checkEmail(UserEmail);
             }
