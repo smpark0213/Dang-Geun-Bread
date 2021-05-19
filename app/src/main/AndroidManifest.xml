@@ -28,7 +28,7 @@
         <activity android:name=".Signup06Activity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Bread_Detail" />
-        <!--<activity android:name=".Cart" />-->
+        <activity android:name=".MenuRegister" />
     </application>
 
 </manifest>
