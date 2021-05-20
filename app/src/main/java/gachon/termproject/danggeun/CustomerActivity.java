@@ -53,6 +53,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import gachon.termproject.danggeun.Util.Firestore;
+
 
 public class CustomerActivity extends AppCompatActivity
         implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,
@@ -288,32 +290,22 @@ public class CustomerActivity extends AppCompatActivity
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             String markerTitle=marker.getTitle();
-            CollectionReference collectionReference = db.collection("ShopList");
-            collectionReference
-                    .whereEqualTo("markerTitle",markerTitle)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    //각 게시글의 정보를 가져와 arrayList에 저장.
-                                    Log.d("로그: ", document.getId() + " => " + document.getData());
-                                    Intent intent=new Intent(getApplicationContext(),StoreActivity.class);
-                                    intent.putExtra("id",document.getId());
-                                    startActivity(intent);
-
-
-                                }
-
-                            } else {
-                                Log.d("로그: ", "Error getting documents: ", task.getException());
-
-                            }
+            Firestore.getStoreInfo(markerTitle).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            //각 게시글의 정보를 가져와 arrayList에 저장.
+                            Log.d("로그: ", document.getId() + " => " + document.getData());
+                            Intent intent=new Intent(getApplicationContext(),StoreActivity.class);
+                            intent.putExtra("id",document.getId());
+                            startActivity(intent);
                         }
-                    });
-
+                    } else {
+                        Log.d("로그: ", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
 
         }
 
