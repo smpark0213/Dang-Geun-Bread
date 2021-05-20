@@ -1,12 +1,10 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Signup;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,11 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import gachon.termproject.danggeun.R;
 
 public class Signup04Activity_user extends AppCompatActivity {
 

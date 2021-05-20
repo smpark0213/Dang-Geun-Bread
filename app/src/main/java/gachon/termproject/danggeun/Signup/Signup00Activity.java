@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Signup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import gachon.termproject.danggeun.LoginActivity;
+import gachon.termproject.danggeun.R;
 
 public class Signup00Activity extends AppCompatActivity {
     public static boolean publicMan = true; // 회원가입을 위한 전역변수

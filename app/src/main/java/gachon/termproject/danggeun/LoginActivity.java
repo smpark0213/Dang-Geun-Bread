@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import gachon.termproject.danggeun.Signup.Signup00Activity;
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private DocumentReference documentReference;
@@ -44,9 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
 
-<<<<<<< HEAD
-            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
-=======
             if(UserInfo.isConsumer){
                 Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), StoreActivity.class));
@@ -55,13 +54,8 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
             }
->>>>>>> master
             finish();
         }
-
-
-
-
 
 
         //login버튼을 눌럿을때
