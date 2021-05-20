@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,15 +38,26 @@ public class LoginActivity extends AppCompatActivity {
         EditText pw = findViewById(R.id.login_editText_PW);
 
         // 이미 로그인한 경우 로그인 상태 유지
-
+        // 로그아웃시키고 싶으면 요기 주석하고 재실행하쉐여
         fAuth = FirebaseAuth.getInstance();
+
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
-            Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            if(UserInfo.isConsumer){
+                Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), StoreActivity.class));
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "자동 로그인(전문가)", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
             finish();
         }
+
+
+
+
 
 
         //login버튼을 눌럿을때
@@ -65,8 +77,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
                                         setUserInfo();
-                                        Toast.makeText(getApplicationContext(), "로그인 성공!!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        if(UserInfo.isConsumer){
+                                            Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), StoreActivity.class));
+                                        }
+                                        else {
+                                            Toast.makeText(getApplicationContext(), "자동 로그인(전문가)", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        }
                                         finish();
                                     } else if (task.getException() != null)
                                         Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -112,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        // 사용자 닉네임, 프로필 사진 Url 가져오기
+                        UserInfo.isConsumer = document.getBoolean("isConsumer");
                         UserInfo.nickname = document.getString("nickname");
                         UserInfo.profileImg = document.getString("profileUrl");
                     }

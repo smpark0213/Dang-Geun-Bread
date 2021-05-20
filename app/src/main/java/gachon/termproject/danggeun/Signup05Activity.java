@@ -24,6 +24,7 @@ public class Signup05Activity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish(); // 자신을 죽이고 로그인 페이지로 이동
+
             }
         });
 

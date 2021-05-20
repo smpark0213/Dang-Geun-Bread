@@ -29,7 +29,9 @@
         <activity android:name=".Signup00Activity" />
         <activity android:name=".Signup01Activity"/>
         <activity android:name=".Signup02Activity" />
+        <activity android:name=".Signup03Activity" />
         <activity android:name=".Signup04Activity" />
+        <activity android:name=".Signup04Activity_user" />
         <activity android:name=".Signup05Activity" />
         <activity android:name=".Signup06Activity" />
         <activity android:name=".MainActivity" />
@@ -39,6 +41,7 @@
         <activity android:name=".MenuRegister" />
         <activity android:name=".Cart" />
         <activity android:name=".TimePickerActivity" />
+        <activity android:name=".StoreActivity" />
 
         //구글맵 API 키
         <meta-data

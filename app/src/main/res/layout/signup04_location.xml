@@ -39,164 +39,20 @@
                 android:id="@+id/signup01_text01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주로 활동하는 지역을 \n선택해 주세요(시/도)"
+                android:text="빵집 위치를 입력해주세요"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="26sp" />
+            <EditText
+                android:id="@+id/signup04_edittext01"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:backgroundTint="@color/default_orange"
+                android:hint="정확히 입력해주세요." />
 
         </LinearLayout>
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:stretchColumns="0, 1">
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_SU"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="서울특별시"
-                    android:textSize="20sp">
-
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_GG"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="경기도"
-                    android:textSize="20sp">
-
-                </CheckBox>
-            </TableRow>
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_IC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="인천광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_GW"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="강원도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_DJ"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="대전광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_CB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="충청북도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_GJ"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="광주광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_CN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="충청남도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_DG"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="대구광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_GB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="경상북도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_US"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="울산광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_GN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="경상남도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_BS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="부산광역시"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_JB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전라북도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-            <TableRow>
-                <CheckBox
-                    android:id="@+id/signup04_JJ"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="제주도"
-                    android:textSize="20sp">
-                </CheckBox>
-
-                <CheckBox
-                    android:id="@+id/signup04_JN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전라남도"
-                    android:textSize="20sp">
-                </CheckBox>
-            </TableRow>
-        </TableLayout>
 
 
         <LinearLayout
@@ -206,7 +62,6 @@
             android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-            <!--                background : 버튼 누르면 물결 효과-->
             <Button
                 android:id="@+id/signup04_button01"
                 android:layout_width="100dp"
