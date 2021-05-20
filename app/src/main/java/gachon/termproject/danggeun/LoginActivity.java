@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(UserInfo.isConsumer){
                 Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), StoreActivity.class));
+                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
             }
             else {
                 Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                         setUserInfo();
                                         if(UserInfo.isConsumer){
                                             Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), StoreActivity.class));
+                                            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
                                         }
                                         else {
                                             Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
