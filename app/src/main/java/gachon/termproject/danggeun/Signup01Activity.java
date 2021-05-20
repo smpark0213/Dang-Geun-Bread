@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun.Signup;
+package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,6 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-
-import gachon.termproject.danggeun.R;
 
 public class Signup01Activity extends AppCompatActivity {
     public static String identifier; // 회원가입을 위한 전역변수

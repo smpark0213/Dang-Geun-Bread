@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun.Signup;
+package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import gachon.termproject.danggeun.R;
 
 public class Signup02Activity extends AppCompatActivity {
     public static String password; // 회원가입을 위한 전역변수

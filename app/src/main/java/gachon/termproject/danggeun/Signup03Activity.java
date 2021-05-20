@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun.Signup;
+package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-
-import gachon.termproject.danggeun.R;
 
 public class Signup03Activity extends AppCompatActivity {
     private FirebaseFirestore fStore;
@@ -59,7 +57,12 @@ public class Signup03Activity extends AppCompatActivity {
                                 } else if (i == list.size() - 1) {
                                     // 닉네임 설정 후 다음 페이지로 이동
                                     nickname = temp;
-                                    startActivity(new Intent(getApplicationContext(), Signup04Activity.class));
+                                    if(Signup00Activity.publicMan) {
+                                        startActivity(new Intent(getApplicationContext(), Signup04Activity_user.class));
+                                    }
+                                    else{
+                                        startActivity(new Intent(getApplicationContext(), Signup04Activity.class));
+                                    }
                                 }
                             }
                         }

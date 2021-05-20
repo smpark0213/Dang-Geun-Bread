@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.InputStream;
 
 public class MenuRegister extends AppCompatActivity {
-    ImageView iv;
+    ImageView iv, back;
     Button uploadBtn;
     private final int GALLERY_CODE = 10;
     private FirebaseStorage storage;
@@ -44,6 +44,15 @@ public class MenuRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_register);
         storage = FirebaseStorage.getInstance();
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         iv = findViewById(R.id.breadImg);
         iv.setOnClickListener(new View.OnClickListener() {
