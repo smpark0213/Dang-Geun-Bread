@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Signup;
 
 import android.content.Intent;
 import android.os.Bundle;
