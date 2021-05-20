@@ -34,9 +34,9 @@
         <activity android:name=".Signup04Activity_user" />
         <activity android:name=".Signup05Activity" />
         <activity android:name=".Signup06Activity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".CustomerActivity" />
         <activity android:name=".ManagerActivity" />
+        <activity android:name=".CustomerActivity" />
+        <activity android:name=".StoreRegister" />
         <activity android:name=".Bread_Detail" />
         <activity android:name=".MenuRegister" />
         <activity android:name=".Cart" />

@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,16 +40,17 @@ public class LoginActivity extends AppCompatActivity {
         // 로그아웃시키고 싶으면 요기 주석하고 재실행하쉐여
         fAuth = FirebaseAuth.getInstance();
 
+
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
 
             if(UserInfo.isConsumer){
-                Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), StoreActivity.class));
             }
             else {
-                Toast.makeText(getApplicationContext(), "자동 로그인(전문가)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
             }
             finish();
         }
@@ -78,12 +78,12 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         setUserInfo();
                                         if(UserInfo.isConsumer){
-                                            Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(getApplicationContext(), StoreActivity.class));
                                         }
                                         else {
-                                            Toast.makeText(getApplicationContext(), "자동 로그인(전문가)", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                            Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
                                         }
                                         finish();
                                     } else if (task.getException() != null)
