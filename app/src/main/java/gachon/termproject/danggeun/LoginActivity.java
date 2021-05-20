@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import gachon.termproject.danggeun.Signup.Signup00Activity;
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private DocumentReference documentReference;
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             setUserInfo();
             Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
             finish();
         }
 

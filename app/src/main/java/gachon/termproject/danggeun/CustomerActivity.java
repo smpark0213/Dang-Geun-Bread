@@ -299,6 +299,7 @@ public class CustomerActivity extends AppCompatActivity
                             Log.d("로그: ", document.getId() + " => " + document.getData());
                             Intent intent=new Intent(getApplicationContext(),StoreActivity.class);
                             intent.putExtra("id",document.getId());
+                            intent.putExtra("title", markerTitle);
                             startActivity(intent);
                         }
                     } else {
