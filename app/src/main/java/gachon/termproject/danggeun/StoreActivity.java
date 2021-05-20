@@ -37,6 +37,7 @@ public class StoreActivity extends AppCompatActivity {
     private String userId;
     private static ArrayList<CartBread> breadlist = new ArrayList<>();
 
+    // TODO : onActivityResult 실행 안됨. 왜?
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
