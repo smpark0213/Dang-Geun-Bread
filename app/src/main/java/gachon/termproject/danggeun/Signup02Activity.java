@@ -8,11 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import gachon.termproject.danggeun.R;
 
 public class Signup02Activity extends AppCompatActivity {
     public static String password; // 회원가입을 위한 전역변수

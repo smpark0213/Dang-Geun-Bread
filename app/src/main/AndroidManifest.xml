@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CustomerActivity" />
         <activity android:name=".Signup00Activity" />
         <activity android:name=".Signup01Activity"/>
         <activity android:name=".Signup02Activity" />
@@ -35,7 +36,6 @@
         <activity android:name=".Signup05Activity" />
         <activity android:name=".Signup06Activity" />
         <activity android:name=".ManagerActivity" />
-        <activity android:name=".CustomerActivity" />
         <activity android:name=".StoreRegister" />
         <activity android:name=".Bread_Detail" />
         <activity android:name=".MenuRegister" />

@@ -3,6 +3,7 @@ package gachon.termproject.danggeun.Util;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -39,13 +40,19 @@ public class Firestore {
     /**
      * 특정 가게, 빵 list 가져오기
      */
-
-    /**
-     * @author 최우석
-     */
+    public static Task<QuerySnapshot> getBreadList(String storeId){
+        return getFirestoreInstance().collection("Bread").whereEqualTo("storeId", storeId).get();
+    }
 
     /**
      * 특정 빵 정보 가져오기
+     */
+    public static Task<DocumentSnapshot> getBreadInfo(String breadId){
+        return getFirestoreInstance().collection("Bread").document(breadId).get();
+    }
+
+    /**
+     * @author 최우석
      */
 
     /**

@@ -44,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
 
+<<<<<<< HEAD
+            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
+=======
             if(UserInfo.isConsumer){
                 Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), StoreActivity.class));
@@ -52,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
             }
+>>>>>>> master
             finish();
         }
 

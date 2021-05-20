@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import gachon.termproject.danggeun.R;
-
 public class Signup00Activity extends AppCompatActivity {
     public static boolean publicMan = true; // 회원가입을 위한 전역변수
 
