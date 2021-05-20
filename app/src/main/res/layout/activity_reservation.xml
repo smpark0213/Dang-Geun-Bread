@@ -25,6 +25,9 @@
         app:layout_constraintBottom_toTopOf="@id/btn_pick_up_time"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@color/purple_500"
         android:id="@+id/btn_pick_up_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,6 +38,9 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@color/purple_500"
         android:id="@+id/btn_real_reservation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

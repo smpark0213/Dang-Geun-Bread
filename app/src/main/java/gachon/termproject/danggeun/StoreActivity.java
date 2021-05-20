@@ -20,6 +20,7 @@ public class StoreActivity extends AppCompatActivity {
         btn_reserve = findViewById(R.id.btn_reserve);
         ArrayList<BreadInfo> breadInfos = new ArrayList<>();
 
+        // TODO : 가게 정보 가져오기
         // TODO : Firebase에서 해당 가게의 빵 정보 읽어오기
         for(int i = 0; i < 10; ++i){
             breadInfos.add(new BreadInfo("소라방", i + ""));
