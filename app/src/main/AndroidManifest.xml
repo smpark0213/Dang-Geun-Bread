@@ -3,15 +3,18 @@
     package="gachon.termproject.danggeun">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
-    //맵관련
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
+
     <application
+        android:preserveLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -42,6 +45,8 @@
         <activity android:name=".Cart" />
         <activity android:name=".TimePickerActivity" />
         <activity android:name=".StoreActivity" />
+        <activity android:name=".StoreInfo"></activity>
+        <activity android:name=".Bread_list_manager"/>
 
         //구글맵 API 키
         <meta-data

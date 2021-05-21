@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import gachon.termproject.danggeun.R;
+import gachon.termproject.danggeun.Time;
 
 public class AdapterActivity extends BaseAdapter {
     public ArrayList<Time> listviewitem = new ArrayList<Time>();

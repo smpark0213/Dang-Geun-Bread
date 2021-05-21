@@ -41,7 +41,7 @@ public class Firestore {
      * 특정 가게, 빵 list 가져오기
      */
     public static Task<QuerySnapshot> getBreadList(String storeId){
-        return getFirestoreInstance().collection("Bread").whereEqualTo("storeId", storeId).get();
+        return getFirestoreInstance().collection("Bread").whereEqualTo("storeID", storeId).get();
     }
 
     /**
