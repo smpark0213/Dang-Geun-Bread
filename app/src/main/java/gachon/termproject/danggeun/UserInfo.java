@@ -7,7 +7,7 @@ public class UserInfo {
 
     public UserInfo(){}
 
-    public static String storename;
+    public static String BakeryName;
     public static String userId;
     public static String closeTime;
     private String openTime;
@@ -17,7 +17,7 @@ public class UserInfo {
     public static boolean isConsumer;
     private ArrayList<HashMap<String,Long>> reservation;
 
-    public UserInfo(String userId,String closeTime, boolean isConsumer,String location,String nickname,String openTime,String profileImg,ArrayList<HashMap<String,Long>> reservation,String storename){
+    public UserInfo(String userId,String closeTime, boolean isConsumer,String location,String nickname,String openTime,String profileImg,ArrayList<HashMap<String,Long>> reservation,String BakeryName){
         this.userId=userId;
         this.closeTime=closeTime;
         this.openTime=openTime;
@@ -26,7 +26,7 @@ public class UserInfo {
         this.profileImg=profileImg;
         this.isConsumer=isConsumer;
         this.reservation=this.reservation;
-        this.storename=storename;
+        this.BakeryName=BakeryName;
 
     }
 
@@ -37,7 +37,7 @@ public class UserInfo {
     public String getCloseTime() { return this.closeTime; }
     public String getOpenTime() { return this.openTime; }
     public String getLocation() { return this.location; }
-    public String getStorename(){return this.storename; }
+    public String getBakeryName(){return this.BakeryName; }
 
 
     public void setUserId(String userId) { this.userId = userId; }

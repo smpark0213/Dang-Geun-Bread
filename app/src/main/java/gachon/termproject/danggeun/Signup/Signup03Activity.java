@@ -53,7 +53,7 @@ public class Signup03Activity extends AppCompatActivity {
                             for (int i = 0; i < list.size(); i++) {
                                 DocumentSnapshot snapshot = list.get(i);
                                 String nicknameCheck = snapshot.getString("nickname");
-                                if (temp.compareTo(nicknameCheck) == 0) {
+                                if (temp.equals(nicknameCheck)) {
                                     Toast.makeText(getApplicationContext(), "중복된 닉네임 입니다", Toast.LENGTH_SHORT).show();
                                     break;
                                 } else if (i == list.size() - 1) {

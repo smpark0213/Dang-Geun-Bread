@@ -62,7 +62,7 @@ public class Signup04Activity_user extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("ID", ID);
                             user.put("nickname", nickname);
-                            user.put("isConsumer", true);
+                            user.put("isConsumer", false);
                             user.put("profileUrl", "None"); // 프로필 이미지 url
                             user.put("location", temp); // user위치
 

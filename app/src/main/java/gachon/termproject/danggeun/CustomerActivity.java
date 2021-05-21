@@ -266,16 +266,16 @@ public class CustomerActivity extends AppCompatActivity
                 System.out.println(latitude);
                 System.out.println(longitude);
 
-                // 좌표(위도, 경도) 생성
+//                // 좌표(위도, 경도) 생성
                 LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                // 마커 생성
-                MarkerOptions mOptions2 = new MarkerOptions();
-                mOptions2.title("search result");
-                mOptions2.snippet(address);
-                mOptions2.position(point);
-                // 마커 추가
-                mMap.addMarker(mOptions2);
-                // 해당 좌표로 화면 줌
+//                // 마커 생성
+//                MarkerOptions mOptions2 = new MarkerOptions();
+//                mOptions2.title("search result");
+//                mOptions2.snippet(address);
+//                mOptions2.position(point);
+//                // 마커 추가
+//                mMap.addMarker(mOptions2);
+//                // 해당 좌표로 화면 줌
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
             }
         });

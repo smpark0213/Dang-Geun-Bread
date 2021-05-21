@@ -44,19 +44,19 @@ public class LoginActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
 
-        if (fAuth.getCurrentUser() != null){
-            setUserInfo();
-
-            if(UserInfo.isConsumer){
-                Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
-            }
-            else {
-                Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
-            }
-            finish();
-        }
+//        if (fAuth.getCurrentUser() != null){
+//            setUserInfo();
+//
+//            if(UserInfo.isConsumer){
+//                Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
+//            }
+//            else {
+//                Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
+//            }
+//            finish();
+//        }
 
 
         //login버튼을 눌럿을때

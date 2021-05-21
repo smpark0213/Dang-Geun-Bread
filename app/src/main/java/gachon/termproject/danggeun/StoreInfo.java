@@ -132,13 +132,13 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
                 TextView openTimeTextview = (TextView) findViewById(R.id.openTime);
                 TextView closeTimeTextview = (TextView) findViewById(R.id.closeTime);
 
-                String storename = memberInfo.getStorename();
+                String BakeryName = memberInfo.getBakeryName();
                 String openTime = memberInfo.getOpenTime();
                 String closeTime = memberInfo.getOpenTime();
 
-                storenameTextview.setText(storename);
-                openTimeTextview.setText(openTime+"am");
-                closeTimeTextview.setText(closeTime+"pm");
+                storenameTextview.setText(BakeryName);
+                openTimeTextview.setText(openTime+":00");
+                closeTimeTextview.setText(closeTime+":00");
 
                 String str=memberInfo.getLocation();
                 List<Address> addressList = null;
@@ -175,7 +175,7 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
                 LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
                 // 마커 생성
                 MarkerOptions mOptions2 = new MarkerOptions();
-                mOptions2.title(storename);
+                mOptions2.title(BakeryName);
                 mOptions2.snippet(address);
                 mOptions2.position(point);
                 // 마커 추가
