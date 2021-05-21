@@ -60,6 +60,7 @@ public class Signup06Activity extends AppCompatActivity {
                 String PW = Signup02Activity.password;
                 String nickname = Signup03Activity.nickname;
                 String location = Signup04Activity.location;
+                String bakery = Signup04Activity.bakery;
 
 
                 // 회원가입 프로세스
@@ -77,11 +78,12 @@ public class Signup06Activity extends AppCompatActivity {
                                 Map<String, Object> user = new HashMap<>();
                                 user.put("ID", ID);
                                 user.put("nickname", nickname);
-                                user.put("isConsumer", true);
+                                user.put("isConsumer", Signup00Activity.publicMan);
                                 user.put("profileUrl", "None"); // 프로필 이미지 url
                                 user.put("location", location); // user위치
                                 user.put("openTime", start);
                                 user.put("closeTime", end);
+                                user.put("BakeryName", bakery);
 
                                 documentReference.set(user); // 데이터베이스에 정보 저장
 
