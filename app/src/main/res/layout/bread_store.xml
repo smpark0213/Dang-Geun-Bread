@@ -16,15 +16,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bread_name"
-        android:layout_marginLeft="10dp"
-        tools:text="빵 이름"
-        android:textSize="26sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bread_img"
-        app:layout_constraintStart_toEndOf="@id/bread_img"
+        android:layout_marginLeft="10dp"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@id/bread_price"
         app:layout_constraintEnd_toStartOf="@id/btn_bread_reservation"
-        app:layout_constraintBottom_toTopOf="@id/bread_price"/>
+        app:layout_constraintStart_toEndOf="@id/bread_img"
+        app:layout_constraintTop_toTopOf="@id/bread_img"
+        tools:text="빵 이름" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tx_price"
@@ -40,13 +40,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bread_price"
-        tools:text="9,999 원"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bread_name"
-        app:layout_constraintStart_toStartOf="@id/bread_name"
+        app:layout_constraintBottom_toBottomOf="@id/bread_img"
         app:layout_constraintEnd_toEndOf="@id/bread_name"
-        app:layout_constraintBottom_toBottomOf="@id/bread_img"/>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/bread_name"
+        app:layout_constraintTop_toBottomOf="@id/bread_name"
+        tools:text="9,999 원" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:background="@color/purple_500"

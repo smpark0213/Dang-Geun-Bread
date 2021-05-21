@@ -43,7 +43,7 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
         AppCompatTextView bread_price;
         AppCompatImageView bread_img;
 
-        ViewHolder(Activity activity,View itemView) {
+        ViewHolder(Activity activity, View itemView) {
             super(itemView);
 
             bread_name = itemView.findViewById(R.id.bread_name);
@@ -67,15 +67,16 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful()){
                                     DocumentSnapshot d = task.getResult();
-                                    bundle.putString("store", storeName);
-                                    bundle.putString("img", d.getData().get("breadUrl").toString());
+                                    bundle.putString("store", d.getData().get("storeID").toString());
+                                    bundle.putString("img", d.getData().get("photoURL").toString());
                                     bundle.putString("name", bread_name.getText().toString());
                                     bundle.putString("price", bread_price.getText().toString());
-                                    bundle.putString("maximum", d.getData().get("breadLimit").toString());
+                                    bundle.putString("maximum", d.getData().get("count").toString());
 
                                     Intent intent = new Intent(context, Bread_Detail.class);
                                     intent.putExtras(bundle);
-                                    context.startActivity(intent);
+                                    //context.startActivity(intent);
+                                    ((Activity)context).startActivityForResult(intent, 1000);
                                 }
                                 else{
                                     Log.d(ViewHolder.this.getClass().toString(), "Fail to read breadInfo");
@@ -112,7 +113,7 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
         breadId.add(position,currentBread.getBreadId());
 
         holder.bread_name.setText(currentBread.getBreadName());
-        holder.bread_price.setText(currentBread.getPrice());
+        holder.bread_price.setText(String.valueOf(currentBread.getPrice()));
         String breadImagePath=currentBread.getPhotoURL();
 
         if(isStorageUrl(breadImagePath)){

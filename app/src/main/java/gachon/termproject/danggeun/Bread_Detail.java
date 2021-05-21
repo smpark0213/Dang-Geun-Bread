@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import static gachon.termproject.danggeun.Util.others.isStorageUrl;
+
 public class Bread_Detail extends AppCompatActivity {
 
     private int counter = 1;
@@ -51,6 +53,8 @@ public class Bread_Detail extends AppCompatActivity {
             breadPrice = bundle.getString("price");
             maximum = bundle.getString("maximum");
             Toast.makeText(getApplicationContext(), breadImg, Toast.LENGTH_SHORT).show();
+
+
             //Toast.makeText(getApplicationContext(), breadName, Toast.LENGTH_SHORT).show();
 
         }
@@ -59,7 +63,7 @@ public class Bread_Detail extends AppCompatActivity {
         ImageView breadIV = (ImageView) findViewById(R.id.breadImageView);
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://dang-geun-bread.appspot.com");
         StorageReference storageRef = storage.getReference();
-        storageRef.child("Photo/"+breadImg+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("Bread/"+breadImg+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //성공시
@@ -91,6 +95,8 @@ public class Bread_Detail extends AppCompatActivity {
         Button cartBtn = (Button) findViewById(R.id.cartBtn);
         TextView count = (TextView) findViewById(R.id.count);
 
+
+
         if (counter == 1) {
             totalPrice = Integer.parseInt(breadPrice);
             cartBtn.setText(String.valueOf(counter)+"개 담기       "+totalPrice+"원");
@@ -118,7 +124,7 @@ public class Bread_Detail extends AppCompatActivity {
         ImageView plusBtn = (ImageView) findViewById(R.id.plus_btn);
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //수량+1 (최대수량 할꺼야?)
+            public void onClick(View v) { //수량+1
                 counter++;
                 if (counter <= Integer.parseInt(maximum)){
                     count.setText(String.valueOf(counter));
@@ -139,15 +145,12 @@ public class Bread_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("BreadName", breadName);
+                returnIntent.putExtra("Count", counter);
+                returnIntent.putExtra("TotalPrice", totalPrice);
 
-                bundle.putString("BreadName", breadName);
-                bundle.putInt("Count", counter);
-                bundle.putInt("TotalPrice", totalPrice);
-                intent.putExtras(bundle);
-
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });

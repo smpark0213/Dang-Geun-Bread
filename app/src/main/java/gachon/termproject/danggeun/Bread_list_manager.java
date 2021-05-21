@@ -63,7 +63,7 @@ public class Bread_list_manager extends AppCompatActivity {
                                         document.getData().get("storeID").toString(),
                                         document.getData().get("breadId").toString(),
                                         document.getData().get("breadName").toString(),
-                                        document.getData().get("price").toString(),
+                                        (long) document.getData().get("price"),
                                         (long) document.getData().get("count"),
                                         document.getData().get("photoURL").toString()
                                 ));
