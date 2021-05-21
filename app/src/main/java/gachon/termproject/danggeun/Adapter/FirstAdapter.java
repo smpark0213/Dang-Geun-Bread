@@ -63,34 +63,43 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.freeViewHold
             CardView cardView =(CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_post, parent,false);
             final freeViewHolder freeViewHolder = new freeViewHolder(activity, cardView, mDataset.get(viewType));
 
-
             return freeViewHolder;
         }
+
 
         //카드뷰 안에 들어갈 목록
         //빵 사진, 빵 이름, 빵 개수,예약 마감 날짜,
         @Override
         public void onBindViewHolder(@NotNull final freeViewHolder holder, int position){
+
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+            //Cardview 정의
             CardView cardView = holder.cardView;
             cardView.setLayoutParams(layoutParams);
+
+            //사진넣기
             ImageView titleImage = cardView.findViewById(R.id.bread_img);
             String breadImagePath = mDataset.get(position).getPhotoURL();
             if(isStorageUrl(breadImagePath)){
                 Glide.with(activity).load(breadImagePath).override(600).thumbnail(0.1f).into(titleImage);
             }
+
+            //빵 이름 넣기
             TextView title = cardView.findViewById(R.id.bread_name);
             title.setText(mDataset.get(position).getBreadName());
 
+            //빵 가격 넣기
             TextView userName = cardView.findViewById(R.id.price);
             userName.setText(mDataset.get(position).getPrice());
 
 //            TextView createdAt = cardView.findViewById(R.id.bread_date);
 //            createdAt.setText(new SimpleDateFormat("MM-dd hh:mm", Locale.KOREA).format(mDataset.get(position).getDate()));
 
+            //빵 개수 넣기
             TextView recom = cardView.findViewById(R.id.count);
             recom.setText("개수 : " + (int) mDataset.get(position).getCount());
+
             //빵 매뉴 삭제
             //다이얼로그 띄우고 ok누르면 삭제
             String breadId= mDataset.get(position).getBreadId();
@@ -132,7 +141,6 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.freeViewHold
                         }
                     });
                     alert.show();
-
 
                 }
             });

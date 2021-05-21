@@ -60,15 +60,13 @@ public class StoreActivity extends AppCompatActivity {
                         Log.d(getLocalClassName(), "Success read bread list");
                         // 빵 이름, 빵 가격
                         String breadName = d.getData().get("breadName").toString();
-                        String breadPrice = d.getData().get("breadPrice").toString();
+                        String breadPrice = d.getData().get("price").toString();
                         String breadId = d.getId();
-                        String stoderID= d.getData().get("stoderID").toString();
+                        String storeID= d.getData().get("storeID").toString();
                         String photoUrl=d.getData().get("photoURL").toString();
-                        int count=Integer.parseInt(d.getData().get("count").toString());
-                        long now = System.currentTimeMillis();
-                        Date date = new Date(now);
+                        Long count=Long.parseLong(d.getData().get("count").toString());
 
-                        breadInfos.add(new BreadInfo(stoderID,breadId,breadName,breadPrice,count,photoUrl));
+                        breadInfos.add(new BreadInfo(storeID,breadId,breadName,breadPrice,count,photoUrl));
                     }
 
                     // 리사이클러뷰에 linearlayout 객체 지정
@@ -76,7 +74,7 @@ public class StoreActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
                     // 리사이클러뷰에 adapter지정
-                    BreadAdpater breadAdpater = new BreadAdpater(breadInfos, store_name.getText().toString());
+                    BreadAdpater breadAdpater = new BreadAdpater(StoreActivity.this,breadInfos, store_name.getText().toString());
                     recyclerView.setAdapter(breadAdpater);
                 }
                 else{
