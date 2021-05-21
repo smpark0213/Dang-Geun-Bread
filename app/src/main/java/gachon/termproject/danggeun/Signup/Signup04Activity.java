@@ -23,7 +23,7 @@ public class Signup04Activity extends AppCompatActivity {
         setContentView(R.layout.signup04_location);
 
         text = findViewById(R.id.signup04_edittext01);
-        text1 = findViewById(R.id.signup04_edittext01_user);
+        text1 = findViewById(R.id.signup04_edittext02);
         nextButton = findViewById(R.id.signup04_button01);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
