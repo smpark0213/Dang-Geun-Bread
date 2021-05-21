@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -133,17 +134,21 @@ public class Bread_Detail extends AppCompatActivity {
 
 
         //카트에 담기
+        // 빵 이름, 빵 갯수, 총 가격
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //파이어베이스에 올리기
-                //올려줘야 되는 데이터
-                //가게 이름, 빵 이름: breadName, 빵 개수: counter, 총 가격: totalPrice
-                databaseReference.child("reservation").child("StoreName").setValue(storeName);
-                databaseReference.child("reservation").child("BreadName").setValue(breadName);
-                databaseReference.child("reservation").child("Count").setValue(counter);
-                databaseReference.child("reservation").child("BreadPrice").setValue(breadPrice);
-                databaseReference.child("reservation").child("TotalPrice").setValue(totalPrice);
+            public void onClick(View v) {
 
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+
+                bundle.putString("BreadName", breadName);
+                bundle.putInt("Count", counter);
+                bundle.putInt("TotalPrice", totalPrice);
+                intent.putExtras(bundle);
+
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 

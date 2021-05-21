@@ -65,6 +65,10 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
                                     bundle.putString("name", bread_name.getText().toString());
                                     bundle.putString("price", bread_price.getText().toString());
                                     bundle.putString("maximum", d.getData().get("breadLimit").toString());
+
+                                    Intent intent = new Intent(context, Bread_Detail.class);
+                                    intent.putExtras(bundle);
+                                    context.startActivity(intent);
                                 }
                                 else{
                                     Log.d(ViewHolder.this.getClass().toString(), "Fail to read breadInfo");
@@ -72,9 +76,6 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
                                 }
                             }
                         });
-                        Intent intent = new Intent(context, Bread_Detail.class);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
                     }
                 }
             });
