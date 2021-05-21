@@ -44,6 +44,9 @@ public class ManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //소비자 화면에서 뜨는 빵 리스트에서 예약하기 버튼?만 지우면 될듯
+                Intent intent = new Intent(ManagerActivity.this, Bread_list_manager.class);
+                startActivity(intent);
+
             }
         });
 

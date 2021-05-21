@@ -78,7 +78,6 @@ public class StoreRegister extends AppCompatActivity
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
 
-
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
@@ -390,8 +389,6 @@ public class StoreRegister extends AppCompatActivity
         }
 
     };
-
-
 
     private void startLocationUpdates() {
 

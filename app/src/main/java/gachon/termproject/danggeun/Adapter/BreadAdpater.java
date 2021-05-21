@@ -1,9 +1,8 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.function.LongToDoubleFunction;
 
+import gachon.termproject.danggeun.BreadInfo;
+import gachon.termproject.danggeun.Bread_Detail;
+import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
-import io.grpc.InternalNotifyOnServerBuild;
 
 public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> {
     private ArrayList<BreadInfo> breadData = null;
@@ -82,7 +80,7 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
         }
     }
 
-    public BreadAdpater(ArrayList<BreadInfo> breadData,String storeName) {
+    public BreadAdpater(ArrayList<BreadInfo> breadData, String storeName) {
         this.breadData = breadData;
         this.storeName = storeName;
     }
