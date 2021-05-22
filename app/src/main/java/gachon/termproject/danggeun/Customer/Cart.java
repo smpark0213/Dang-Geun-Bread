@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 
 import gachon.termproject.danggeun.Adapter.AdapterActivity;
+import gachon.termproject.danggeun.R;
 
 public class Cart extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class Cart extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapterPosition = position;
                 arrayAdapter.removeItem(position);
-                Intent intent = new Intent(gachon.termproject.danggeun.Cart.this, TimePickerActivity.class);
+                Intent intent = new Intent(Cart.this, TimePickerActivity.class);
                 startActivityForResult(intent,REQUEST_CODE2);
             }
         });
@@ -64,7 +65,7 @@ public class Cart extends AppCompatActivity {
         tpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent tpIntent = new Intent(gachon.termproject.danggeun.Cart.this, TimePickerActivity.class);
+                Intent tpIntent = new Intent(Cart.this, TimePickerActivity.class);
                 startActivityForResult(tpIntent, REQUEST_CODE1);
             }
         });

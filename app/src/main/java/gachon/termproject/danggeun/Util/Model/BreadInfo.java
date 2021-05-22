@@ -1,6 +1,4 @@
-package gachon.termproject.danggeun;
-
-import java.util.Date;
+package gachon.termproject.danggeun.Util.Model;
 
 public class BreadInfo {
 

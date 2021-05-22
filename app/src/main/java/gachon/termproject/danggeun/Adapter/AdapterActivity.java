@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Time;
+import gachon.termproject.danggeun.Util.Model.Time;
 
 public class AdapterActivity extends BaseAdapter {
     public ArrayList<Time> listviewitem = new ArrayList<Time>();

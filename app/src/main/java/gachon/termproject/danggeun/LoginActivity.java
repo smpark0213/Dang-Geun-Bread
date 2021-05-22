@@ -20,7 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import gachon.termproject.danggeun.Customer.CustomerActivity;
 import gachon.termproject.danggeun.Signup.Signup00Activity;
+import gachon.termproject.danggeun.Util.Model.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();

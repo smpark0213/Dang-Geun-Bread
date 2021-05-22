@@ -49,6 +49,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import gachon.termproject.danggeun.Customer.CustomerActivity;
+import gachon.termproject.danggeun.Util.Model.LocationInfo;
+
 
 public class StoreRegister extends AppCompatActivity
         implements OnMapReadyCallback,

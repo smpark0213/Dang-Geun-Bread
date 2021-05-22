@@ -23,8 +23,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
-import gachon.termproject.danggeun.BreadInfo;
-import gachon.termproject.danggeun.Bread_Detail;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
+import gachon.termproject.danggeun.Customer.Bread_Detail;
 import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
 

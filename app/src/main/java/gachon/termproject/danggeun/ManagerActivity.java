@@ -8,6 +8,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import gachon.termproject.danggeun.Customer.CustomerActivity;
+import gachon.termproject.danggeun.Util.Model.StoreInfo;
+
 public class ManagerActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
