@@ -16,7 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import gachon.termproject.danggeun.Customer.CustomerActivity;
 import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Model.StoreInfo;
 
 public class ManagerActivity extends AppCompatActivity {
 

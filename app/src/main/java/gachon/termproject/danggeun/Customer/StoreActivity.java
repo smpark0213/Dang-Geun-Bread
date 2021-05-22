@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import gachon.termproject.danggeun.Adapter.BreadAdpater;
+import gachon.termproject.danggeun.LoginActivity;
+import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 
 public class StoreActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
@@ -40,7 +43,7 @@ public class StoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
 
-        btn_reserve = findViewById(R.id.btn_reserve);
+
         store_name = findViewById(R.id.store_name);
         ArrayList<BreadInfo> breadInfos = new ArrayList<BreadInfo>();
         Intent intent = getIntent();
@@ -64,7 +67,7 @@ public class StoreActivity extends AppCompatActivity {
                         Log.d(getLocalClassName(), "Success read bread list");
                         // 빵 이름, 빵 가격
                         String breadName = d.getData().get("breadName").toString();
-                        String breadPrice = d.getData().get("price").toString();
+                        Long breadPrice = Long.parseLong(d.getData().get("price").toString());
                         String breadId = d.getId();
                         String storeID= d.getData().get("storeID").toString();
                         String photoUrl=d.getData().get("photoURL").toString();

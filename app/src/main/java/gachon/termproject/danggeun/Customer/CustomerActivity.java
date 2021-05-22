@@ -54,6 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import gachon.termproject.danggeun.LoginActivity;
 import gachon.termproject.danggeun.Util.Model.LocationInfo;
 import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;

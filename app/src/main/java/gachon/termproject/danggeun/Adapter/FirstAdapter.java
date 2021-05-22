@@ -86,7 +86,7 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.freeViewHold
 
             //빵 가격 넣기
             TextView userName = cardView.findViewById(R.id.price);
-            userName.setText((int)mDataset.get(position).getPrice());
+            userName.setText(String.valueOf(mDataset.get(position).getPrice()));
 
 //            TextView createdAt = cardView.findViewById(R.id.bread_date);
 //            createdAt.setText(new SimpleDateFormat("MM-dd hh:mm", Locale.KOREA).format(mDataset.get(position).getDate()));
