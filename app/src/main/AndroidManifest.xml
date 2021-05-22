@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomerActivity" />
+        <activity android:name=".Customer.CustomerActivity" />
         <activity android:name=".Signup.Signup00Activity" />
         <activity android:name=".Signup.Signup01Activity"/>
         <activity android:name=".Signup.Signup02Activity" />
@@ -40,12 +40,12 @@
         <activity android:name=".Signup.Signup06Activity" />
         <activity android:name=".ManagerActivity" />
         <activity android:name=".StoreRegister" />
-        <activity android:name=".Bread_Detail" />
+        <activity android:name=".Customer.Bread_Detail" />
         <activity android:name=".MenuRegister" />
-        <activity android:name=".Cart" />
-        <activity android:name=".TimePickerActivity" />
-        <activity android:name=".StoreActivity" />
-        <activity android:name=".StoreInfo"></activity>
+        <activity android:name=".Customer.Cart" />
+        <activity android:name=".Customer.TimePickerActivity" />
+        <activity android:name=".Customer.StoreActivity" />
+        <activity android:name=".Util.Model.StoreInfo"></activity>
         <activity android:name=".Bread_list_manager"/>
 
         //구글맵 API 키

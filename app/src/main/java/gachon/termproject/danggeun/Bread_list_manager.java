@@ -18,9 +18,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import gachon.termproject.danggeun.Adapter.FirstAdapter;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Util.Firestore;
 
 public class Bread_list_manager extends AppCompatActivity {

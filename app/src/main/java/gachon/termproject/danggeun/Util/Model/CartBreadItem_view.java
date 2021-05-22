@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Util.Model;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import gachon.termproject.danggeun.R;
 
 
 public class CartBreadItem_view extends LinearLayout {

@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -40,25 +38,30 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import gachon.termproject.danggeun.Util.Model.LocationInfo;
+import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
 
-public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
 
-    //맵 데이터 저장
+public class CustomerActivity extends AppCompatActivity
+        implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback{
+
+
     private GoogleMap mMap;
     private Marker currentMarker = null;
     private LocationInfo locationInfo;
@@ -70,17 +73,21 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
 
     private Button searchButton;
     private EditText editText;
-    private Button customButton;
+
+
 
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     boolean needRequest = false;
 
+
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
-    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
+    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
+
 
     Location mCurrentLocatiion;
     LatLng currentPosition;
+
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
@@ -89,16 +96,15 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
-    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.store_info);
 
-        //맵부분
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        setContentView(R.layout.activity_customer);
 
         mLayout = findViewById(R.id.layout_main);
 
@@ -106,6 +112,11 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
 //                .setInterval(UPDATE_INTERVAL_MS)
 //                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS)
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        editText = (EditText) findViewById(R.id.editTextAdress);
+        searchButton=(Button)findViewById(R.id.searchButton);
+
+
         LocationSettingsRequest.Builder builder =
                 new LocationSettingsRequest.Builder();
 
@@ -118,75 +129,8 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ////
-
-        FirebaseUser user = Firestore.getFirebaseUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(user.getUid());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                UserInfo memberInfo = documentSnapshot.toObject(UserInfo.class);
-                TextView storenameTextview = (TextView) findViewById(R.id.storeName);
-                TextView openTimeTextview = (TextView) findViewById(R.id.openTime);
-                TextView closeTimeTextview = (TextView) findViewById(R.id.closeTime);
-
-                String BakeryName = memberInfo.getBakeryName();
-                String openTime = memberInfo.getOpenTime();
-                String closeTime = memberInfo.getOpenTime();
-
-                storenameTextview.setText(BakeryName);
-                openTimeTextview.setText(openTime+":00");
-                closeTimeTextview.setText(closeTime+":00");
-
-                String str=memberInfo.getLocation();
-                List<Address> addressList = null;
-                try {
-                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
-                    addressList = geocoder.getFromLocationName(
-                            str, // 주소
-                            10); // 최대 검색 결과 개수
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                    Log.v("검색","?");
-                    Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(addressList.size()==0)
-                { Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
-                    return;}
-
-                System.out.println(addressList.get(0).toString());
-                // 콤마를 기준으로 split
-                String []splitStr = addressList.get(0).toString().split(",");
-                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-                System.out.println(address);
-
-                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-                System.out.println(latitude);
-                System.out.println(longitude);
-
-                // 좌표(위도, 경도) 생성
-                LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                // 마커 생성
-                MarkerOptions mOptions2 = new MarkerOptions();
-                mOptions2.title(BakeryName);
-                mOptions2.snippet(address);
-                mOptions2.position(point);
-                // 마커 추가
-                mMap.addMarker(mOptions2);
-                //해당 좌표로 화면 줌
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
-            }
-
-        });
-
     }
+
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         Log.d(TAG, "onMapReady :");
@@ -231,7 +175,7 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
                     public void onClick(View view) {
 
                         // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions( StoreInfo.this, REQUIRED_PERMISSIONS,
+                        ActivityCompat.requestPermissions( CustomerActivity.this, REQUIRED_PERMISSIONS,
                                 PERMISSIONS_REQUEST_CODE);
                     }
                 }).show();
@@ -247,176 +191,144 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
         }
 
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("ShopList")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                HashMap<String ,Double> latLng= new HashMap<>();
+
+                                latLng = (HashMap<String ,Double>) document.getData().get("latLng");
+                                String marketSnippet = (String) document.getData().get("markerSnippet");
+                                String markerTitle= (String) document.getData().get("markerTitle");
+
+                                MarkerOptions mOptions = new MarkerOptions();
+                                Double latitude = latLng.get("latitude"); // 위도
+                                Double longitude = latLng.get("longitude"); // 경도
+
+                                // 마커 등록
+                                mOptions.title(markerTitle);
+                                mOptions.snippet(marketSnippet);
+                                mOptions.position(new LatLng(latitude,longitude));
+
+                                Marker marker = mMap.addMarker(mOptions);
+
+
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+        //마커 말풍선 클릭 리스너
+        mMap.setOnInfoWindowClickListener(this);
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         // 현재 오동작을 해서 주석처리
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
 
-        //맵을 클릭하였을 때때
-//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//            String username;
-//
-//            @Override
-//            public void onMapClick(LatLng latLng) {
-//                AlertDialog.Builder alert = new AlertDialog.Builder(StoreInfo.this);
-//
-//                alert.setTitle("빵집 이름을 입력해주세요");
-//                alert.setMessage("Plz, input store name");
-//
-//                final EditText name = new EditText(StoreInfo.this);
-//                alert.setView(name);
-//
-//                alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) {
-//                        username = name.getText().toString();
-//                        MarkerOptions mOptions = new MarkerOptions();
-//                        // 마커 타이틀
-//                        mOptions.title(username);
-//                        Double latitude = latLng.latitude; // 위도
-//                        Double longitude = latLng.longitude; // 경도
-//                        // 마커의 스니펫(간단한 텍스트) 설정
-//                        mOptions.snippet(latitude.toString() + ", " + longitude.toString());
-//                        // LatLng: 위도 경도 쌍을 나타냄
-//                        mOptions.position(new LatLng(latitude, longitude));
-//                        // 마커(핀) 추가
-//
-//                        Marker marker = mMap.addMarker(mOptions);
-//
-//
-//                        //다이어로그 생성
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(StoreInfo.this);
-//
-//                        //경도,위도 를 주소로 변환
-//                        List<Address> addressList = null;
-//                        try {
-//                            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-//                            // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
-//                            addressList = geocoder.getFromLocation(latitude, longitude, 10);
-//                            String[] splitStr = addressList.get(0).toString().split(",");
-//                            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length() - 2); // 주소
-//
-//                            builder.setTitle("이 위치에 가게를 등록하시겠습니까?").setMessage(address);
-//
-//                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                                    LocationInfo locationInfo = new LocationInfo(marker.getPosition(), marker.getTitle(), marker.getSnippet());
-//                                    if (user != null) {
-//                                        db.collection("ShopList").document(user.getUid()).set(locationInfo)
-//                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                    @Override
-//                                                    public void onSuccess(Void aVoid) {
-//                                                        Toast.makeText(getApplicationContext(), "가게를 등록하였습니다.", Toast.LENGTH_SHORT).show();
-//
-//                                                    }
-//                                                })
-//                                                .addOnFailureListener(new OnFailureListener() {
-//                                                    @Override
-//                                                    public void onFailure(@NonNull Exception e) {
-//                                                        Toast.makeText(getApplicationContext(), "가게등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-//                                                        Log.w(TAG, "Error writing document", e);
-//                                                    }
-//                                                });
-//
-//                                    } else {
-//                                        Toast.makeText(getApplicationContext(), "정보가 없습니다.", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                    Toast.makeText(getApplicationContext(), "등록되었습니다", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//
-//                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    marker.remove();
-//                                    Toast.makeText(getApplicationContext(), "다시 선택해주세요", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//
-//
-//                            AlertDialog alertDialog = builder.create();
-//                            alertDialog.show();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//
-//                    }
-//                });
-//
-//                alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) {
-//
-//                    }
-//                });
-//                alert.show();
-//
-//
-//            }
-//
-//        });
+        searchButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String str=editText.getText().toString();
+                List<Address> addressList = null;
+                try {
+                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
+                    addressList = geocoder.getFromLocationName(
+                            str, // 주소
+                            10); // 최대 검색 결과 개수
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-//        searchButton.setOnClickListener(new Button.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                String str=editText.getText().toString();
-//                List<Address> addressList = null;
-//                try {
-//                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-//                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
-//                    addressList = geocoder.getFromLocationName(
-//                            str, // 주소
-//                            10); // 최대 검색 결과 개수
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.v("검색","?");
-//                    Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                if(addressList.size()==0)
-//                { Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
-//                    return;}
-//
-//                System.out.println(addressList.get(0).toString());
-//                // 콤마를 기준으로 split
-//                String []splitStr = addressList.get(0).toString().split(",");
-//                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-//                System.out.println(address);
-//
-//                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-//                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-//                System.out.println(latitude);
-//                System.out.println(longitude);
-//
+                if(addressList.size()==0)
+                { Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                    return;}
+
+                System.out.println(addressList.get(0).toString());
+                // 콤마를 기준으로 split
+                String []splitStr = addressList.get(0).toString().split(",");
+                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+                System.out.println(address);
+
+                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+                System.out.println(latitude);
+                System.out.println(longitude);
+
 //                // 좌표(위도, 경도) 생성
-//                LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-////                // 마커 생성
-////                MarkerOptions mOptions2 = new MarkerOptions();
-////                mOptions2.title("search result");
-////                mOptions2.snippet(address);
-////                mOptions2.position(point);
-////                // 마커 추가
-////                mMap.addMarker(mOptions2);
+                LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+//                // 마커 생성
+//                MarkerOptions mOptions2 = new MarkerOptions();
+//                mOptions2.title("search result");
+//                mOptions2.snippet(address);
+//                mOptions2.position(point);
+//                // 마커 추가
+//                mMap.addMarker(mOptions2);
 //                // 해당 좌표로 화면 줌
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,17));
-//            }
-//        });
-
-//        customButton.setOnClickListener(new Button.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
-//            }
-//        });
-//        ////////////////////
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
+            }
+        });
+        ////////////////////
     }
 
+
+    //말풍선 클릭 리스너
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            String markerTitle=marker.getTitle();
+            Firestore.getStoreInfo(markerTitle).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            //각 게시글의 정보를 가져와 arrayList에 저장.
+                            Log.d("로그: ", document.getId() + " => " + document.getData());
+                            Intent intent=new Intent(getApplicationContext(), StoreActivity.class);
+                            intent.putExtra("id",document.getId());
+                            intent.putExtra("title", markerTitle);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Log.d("로그: ", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+
+        }
+
+
+//            String markerId = marker.getId();
+//            Toast.makeText(CustomerActivity.this, "정보창 클릭 Marker ID : "+markerId, Toast.LENGTH_SHORT).show();
+//            Log.v("마커정보창","클릭댐");
+
+
+    //마커 클릭 리스너
+    GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            String markerId = marker.getId();
+            //선택한 타겟위치
+            LatLng location = marker.getPosition();
+            Toast.makeText(CustomerActivity.this, "마커 클릭 Marker ID : "+markerId+"("+location.latitude+" "+location.longitude+")", Toast.LENGTH_SHORT).show();
+            Log.v("마커","클릭댐");
+            return false;
+        }
+    };
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -433,13 +345,15 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
                         = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-                String markerTitle ="현재위치";
+                String markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
 
                 Log.d(TAG, "onLocationResult : " + markerSnippet);
 
 
+                //현재 위치에 마커 생성하고 이동
+                setCurrentLocation(location, markerTitle, markerSnippet);
 
                 mCurrentLocatiion = location;
             }
@@ -448,6 +362,8 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
         }
 
     };
+
+
 
     private void startLocationUpdates() {
 
@@ -519,39 +435,39 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
 
 
 
-//    public String getCurrentAddress(LatLng latlng) {
-//
-//        //지오코더... GPS를 주소로 변환
-//        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-//
-//        List<Address> addresses;
-//
-//        try {
-//            addresses = geocoder.getFromLocation(
-//                    latlng.latitude,
-//                    latlng.longitude,
-//                    1);
-//        } catch (IOException ioException) {
-//            //네트워크 문제
-//            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-//            return "지오코더 서비스 사용불가";
-//        } catch (IllegalArgumentException illegalArgumentException) {
-//            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-//            return "잘못된 GPS 좌표";
-//
-//        }
-//
-//
-//        if (addresses == null || addresses.size() == 0) {
-//            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-//            return "주소 미발견";
-//
-//        } else {
-//            Address address = addresses.get(0);
-//            return address.getAddressLine(0).toString();
-//        }
-//
-//    }
+    public String getCurrentAddress(LatLng latlng) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+            addresses = geocoder.getFromLocation(
+                    latlng.latitude,
+                    latlng.longitude,
+                    1);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+
+        }
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+
+        } else {
+            Address address = addresses.get(0);
+            return address.getAddressLine(0).toString();
+        }
+
+    }
 
 
     public boolean checkLocationServicesStatus() {
@@ -572,7 +488,7 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLatLng);
-        markerOptions.title("현재 위치");
+        markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         //현재위치는 파란색 마커로 변경
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -708,8 +624,7 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CustomerActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");

@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.loader.content.CursorLoader;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,6 +43,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Date;
 
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Util.Firestore;
 
 public class MenuRegister extends AppCompatActivity {

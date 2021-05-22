@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Util.Model;
 
 import com.google.android.gms.maps.model.LatLng;
 

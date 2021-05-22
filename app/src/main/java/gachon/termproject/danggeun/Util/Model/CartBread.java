@@ -1,6 +1,8 @@
 package gachon.termproject.danggeun.Util.Model;
 
-public class CartBread {
+import java.io.Serializable;
+
+public class CartBread implements Serializable {
     private String breadName;
     private int count;
     private int total;

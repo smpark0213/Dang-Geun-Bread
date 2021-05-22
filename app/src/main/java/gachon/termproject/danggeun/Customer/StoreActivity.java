@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,21 +18,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ThrowOnExtraProperties;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import gachon.termproject.danggeun.Adapter.BreadAdpater;
+import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Util.Model.CartBread;
 
 public class StoreActivity extends AppCompatActivity {
-    private AppCompatButton btn_reserve;
     private AppCompatButton btn_cart;
     private AppCompatTextView store_name;
-    private String sotreId;
-    private String userId;
+
+    private String storeId; // 현재 들어온 가게 id
+    private String userId;  // 현재 로그인한 유저 id
     private static ArrayList<CartBread> breadlist = new ArrayList<>();
 
     @Override
@@ -40,7 +40,6 @@ public class StoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
 
-        btn_reserve = findViewById(R.id.btn_reserve);
         store_name = findViewById(R.id.store_name);
         btn_cart = findViewById(R.id.btn_cart);
         ArrayList<BreadInfo> breadInfos = new ArrayList<BreadInfo>();
@@ -48,7 +47,7 @@ public class StoreActivity extends AppCompatActivity {
 
         // intent null 체크
         if(!TextUtils.isEmpty(intent.getStringExtra("id"))){
-            sotreId = intent.getStringExtra("id"); // 현재 가게 id
+            storeId = intent.getStringExtra("id"); // 현재 가게 id
             store_name.setText(intent.getStringExtra("title")); // 현재 가게 이름
             userId = Firestore.getFirebaseUser().toString();   // 현재 로그인한 유저 id
         }
@@ -58,7 +57,7 @@ public class StoreActivity extends AppCompatActivity {
         }
 
         // 현재 가게에서의 빵 list
-        Firestore.getBreadList(sotreId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Firestore.getBreadList(storeId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -102,25 +101,18 @@ public class StoreActivity extends AppCompatActivity {
                 else{
                     Intent toCart = new Intent(getApplicationContext(), Cart.class);
                     //객체? 번들로 넘기는거 구현하기 (가게 이름 같이 넘겨줘야함)
-                    /*
+
                     Bundle bundle = new Bundle();
                     bundle.putString("title", intent.getStringExtra("title"));
+                    bundle.putString("storeId", storeId);
                     bundle.putString("userId", userId);
                     bundle.putSerializable("bradList", breadlist);
-                    toCart.putExtras(bundle);*/
+                    toCart.putExtras(bundle);
                     startActivity(toCart);
                 }
             }
         });
 
-        // 찐 예약하기 이벤트
-        // 장바구니의 있는 내용들 전부 Firestore Reservation으로
-        btn_reserve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -128,13 +120,23 @@ public class StoreActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(data != null) {
-            String breadName = data.getStringExtra("BreadName");
-            int count = data.getIntExtra("Count",1);
-            int totalPrice = data.getIntExtra("TotalPrice",1);
-            Toast.makeText(getApplicationContext(), breadName+" "+count+"개"+totalPrice+"원", Toast.LENGTH_LONG).show();
+            if(resultCode == RESULT_OK){
+                Log.d(getLocalClassName(), "onActivityResult RESULT OK");
+                String breadName = data.getStringExtra("BreadName");
+                // 값 없으면, 1로 디폴트
+                int count = data.getIntExtra("Count", 1);
+                int totalPrice = data.getIntExtra("TotalPrice",1);
+                Toast.makeText(getApplicationContext(), breadName+" "+count+"개"+totalPrice+"원", Toast.LENGTH_SHORT).show();
 
-            //
-            breadlist.add(new CartBread(breadName, count, totalPrice));
+                // static 빵 list로 추가
+                breadlist.add(new CartBread(breadName, count, totalPrice));
+            }
+            else{
+                Log.d(getLocalClassName(), "onActivityResult RESULT NOT OK");
+            }
+        }
+        else{
+            Log.d(getLocalClassName(), "onActivityResult INTENT IS NULL");
         }
     }
 }
