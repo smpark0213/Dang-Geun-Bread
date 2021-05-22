@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,15 +23,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
-import gachon.termproject.danggeun.BreadInfo;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Bread_list_manager;
-import gachon.termproject.danggeun.MenuRegister;
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.StoreRegister;
 import gachon.termproject.danggeun.Util.Firestore;
 
 import static gachon.termproject.danggeun.Util.others.isStorageUrl;
@@ -91,7 +86,7 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.freeViewHold
 
             //빵 가격 넣기
             TextView userName = cardView.findViewById(R.id.price);
-            userName.setText(mDataset.get(position).getPrice());
+            userName.setText((int)mDataset.get(position).getPrice());
 
 //            TextView createdAt = cardView.findViewById(R.id.bread_date);
 //            createdAt.setText(new SimpleDateFormat("MM-dd hh:mm", Locale.KOREA).format(mDataset.get(position).getDate()));

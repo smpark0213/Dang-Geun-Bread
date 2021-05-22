@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -45,7 +45,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -55,6 +54,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import gachon.termproject.danggeun.Util.Model.LocationInfo;
+import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
 
 
@@ -177,7 +178,7 @@ public class CustomerActivity extends AppCompatActivity
                     public void onClick(View view) {
 
                         // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions( gachon.termproject.danggeun.CustomerActivity.this, REQUIRED_PERMISSIONS,
+                        ActivityCompat.requestPermissions( CustomerActivity.this, REQUIRED_PERMISSIONS,
                                 PERMISSIONS_REQUEST_CODE);
                     }
                 }).show();
@@ -300,7 +301,7 @@ public class CustomerActivity extends AppCompatActivity
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             //각 게시글의 정보를 가져와 arrayList에 저장.
                             Log.d("로그: ", document.getId() + " => " + document.getData());
-                            Intent intent=new Intent(getApplicationContext(),StoreActivity.class);
+                            Intent intent=new Intent(getApplicationContext(), StoreActivity.class);
                             intent.putExtra("id",document.getId());
                             intent.putExtra("title", markerTitle);
                             startActivity(intent);
@@ -326,7 +327,7 @@ public class CustomerActivity extends AppCompatActivity
             String markerId = marker.getId();
             //선택한 타겟위치
             LatLng location = marker.getPosition();
-            Toast.makeText(gachon.termproject.danggeun.CustomerActivity.this, "마커 클릭 Marker ID : "+markerId+"("+location.latitude+" "+location.longitude+")", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CustomerActivity.this, "마커 클릭 Marker ID : "+markerId+"("+location.latitude+" "+location.longitude+")", Toast.LENGTH_SHORT).show();
             Log.v("마커","클릭댐");
             return false;
         }
@@ -626,7 +627,7 @@ public class CustomerActivity extends AppCompatActivity
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(gachon.termproject.danggeun.CustomerActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CustomerActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");

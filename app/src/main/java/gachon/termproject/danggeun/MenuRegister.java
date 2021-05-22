@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.loader.content.CursorLoader;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,6 +43,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Date;
 
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Util.Firestore;
 
 public class MenuRegister extends AppCompatActivity {
@@ -91,12 +91,12 @@ public class MenuRegister extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String breadname=editBreadName.getText().toString();
-                String breadpirce=editBreadPrice.getText().toString();
+                long breadpirce=Integer.parseInt(editBreadPrice.getText().toString());
                 long breadquantitiy=Integer.parseInt(editBreadQuantity.getText().toString());
 
 
                 //edittext나 img가 비어있으면 비어있으니까 채우라고 토스트메시지 띄우기
-                if(breadname==null || breadpirce==null || downloadUri==null || breadquantitiy==0)
+                if(breadname==null || breadpirce==0 || downloadUri==null || breadquantitiy==0)
                 {
                     Log.v("메뉴정보",breadname+breadpirce+downloadUri+breadquantitiy);
                     startToast("사진이나 내용이 비어있어요!");

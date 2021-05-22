@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Util.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -18,9 +18,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import gachon.termproject.danggeun.Adapter.FirstAdapter;
+import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Util.Firestore;
 
 public class Bread_list_manager extends AppCompatActivity {
@@ -63,7 +63,7 @@ public class Bread_list_manager extends AppCompatActivity {
                                         document.getData().get("storeID").toString(),
                                         document.getData().get("breadId").toString(),
                                         document.getData().get("breadName").toString(),
-                                        document.getData().get("price").toString(),
+                                        (long) document.getData().get("price"),
                                         (long) document.getData().get("count"),
                                         document.getData().get("photoURL").toString()
                                 ));
