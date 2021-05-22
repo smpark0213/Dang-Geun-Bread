@@ -4,35 +4,66 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import gachon.termproject.danggeun.Adapter.AdapterActivity;
+import gachon.termproject.danggeun.Cart_Receipt;
 import gachon.termproject.danggeun.R;
+import gachon.termproject.danggeun.Util.Firestore;
 
 public class Cart extends AppCompatActivity {
 
     public static final int REQUEST_CODE1 = 1000;
     public static final int REQUEST_CODE2 = 1001;
     private AdapterActivity arrayAdapter;
-    private Button tpBtn, removeBtn;
+    private Button tpBtn, reserveBtn;
     private ListView listView;
-    private TextView textView;
+    private TextView title;
     private int hour, minute;
     private String result, month, day, am_pm;
     private Handler handler;
     private SimpleDateFormat mFormat;
     private int adapterPosition;
     CalendarView calendarView;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
+    private ChildEventListener mChild;
+
+
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    CartAdapter adapter;
+    ArrayList<BreadDTO> bread_list = new ArrayList<BreadDTO>();
 
 
     @Override
@@ -44,12 +75,48 @@ public class Cart extends AppCompatActivity {
         switch.setFocusable(false);
         switch.setFocusableInTouchMode(false);*/
 
-        // TODO : StoreActivity에서 Intent 받기
-        Intent intent = getIntent();
-        if(!TextUtils.isEmpty(intent.getStringExtra("storeId"))){
-            intent.getExtras();
+        // recyclerView init
+        recyclerView = findViewById(R.id.cart_recycle);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        }
+        adapter = new CartAdapter(bread_list);
+        recyclerView.setAdapter(adapter);
+
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+
+        //앞 액티비티에서 받은 store 이름
+        Bundle bundle = getIntent().getExtras();
+        String storeName = bundle.getString("title");
+        title = (TextView) findViewById(R.id.title);
+        title.setText(storeName);
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mReference = mDatabase.getReference("BreadList");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                bread_list.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    BreadDTO value = data.getValue(BreadDTO.class);
+                    bread_list.add(value);
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.d("Firebase DB Error ", error.toString());
+            }
+        });
 
         arrayAdapter = new AdapterActivity();
 
@@ -75,6 +142,20 @@ public class Cart extends AppCompatActivity {
             public void onClick(View v) {
                 Intent tpIntent = new Intent(Cart.this, TimePickerActivity.class);
                 startActivityForResult(tpIntent, REQUEST_CODE1);
+            }
+        });
+
+
+        //예약하기 버튼 누르면 firestore에 올리기
+        reserveBtn = (Button) findViewById(R.id.reserveBtn);
+        reserveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toReceipt = new Intent(Cart.this, Cart_Receipt.class);
+                startActivity(toReceipt);
+                finish();
+
             }
         });
 

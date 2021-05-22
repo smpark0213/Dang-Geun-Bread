@@ -47,6 +47,7 @@
         <activity android:name=".Customer.StoreActivity" />
         <activity android:name=".Util.Model.StoreInfo"></activity>
         <activity android:name=".Bread_list_manager"/>
+        <activity android:name=".Cart_Receipt"/>
 
         //구글맵 API 키
         <meta-data
