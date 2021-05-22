@@ -11,6 +11,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -61,6 +63,7 @@ public class CustomerActivity extends AppCompatActivity
         ActivityCompat.OnRequestPermissionsResultCallback{
 
 
+    FirebaseAuth fAuth;
     private GoogleMap mMap;
     private Marker currentMarker = null;
     private LocationInfo locationInfo;
@@ -668,6 +671,33 @@ public class CustomerActivity extends AppCompatActivity
                 }
 
                 break;
+        }
+    }
+
+    //로그아웃 버튼 추가
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    //로그아웃 구현
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout :
+                // TODO : process the click event for action_search item.
+                fAuth=FirebaseAuth.getInstance();
+                fAuth.signOut();
+                Intent intent = new Intent(CustomerActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                return true ;
+            // ...
+            // ...
+            default :
+                return super.onOptionsItemSelected(item) ;
         }
     }
 

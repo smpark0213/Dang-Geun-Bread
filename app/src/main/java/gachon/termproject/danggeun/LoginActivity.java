@@ -2,6 +2,7 @@ package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,16 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
-
-            if(!UserInfo.isConsumer){
-                Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
-            }
-            else {
-                Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
-            }
-            finish();
         }
 
 
@@ -76,14 +67,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
                                         setUserInfo();
-                                        if(UserInfo.isConsumer){
-                                            Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
-                                        }
-                                        else {
-                                            Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
-                                        }
+//                                        if(UserInfo.isConsumer==true){
+//                                            Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
+//                                            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
+//                                        }
+//                                        else {
+//                                            Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
+//                                            startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
+//                                        }
                                         finish();
                                     } else if (task.getException() != null)
                                         Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -129,15 +120,28 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
+
                         UserInfo.isConsumer = document.getBoolean("isConsumer");
                         UserInfo.nickname = document.getString("nickname");
                         UserInfo.profileImg = document.getString("profileUrl");
+
+                        //자동 로그인 여기로 옮겼더니 해결됏습니다
+                        if(UserInfo.isConsumer){
+                            Toast.makeText(getApplicationContext(), "자동 로그인 (고객)", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), CustomerActivity.class));
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "자동 로그인 (점주)", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), ManagerActivity.class));
+                        }
+                        finish();
                     }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.v("실패", "실패!");
                 Toast.makeText(getApplicationContext(), "유저 정보 가져오기 실패", Toast.LENGTH_LONG).show();
             }
         });
