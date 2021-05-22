@@ -3,6 +3,7 @@ package gachon.termproject.danggeun.Customer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -42,6 +43,13 @@ public class Cart extends AppCompatActivity {
         /*스위치를 포함한 커스텀 adapterView 리스트 터치 오류 관련 문제 해결(Java code)
         switch.setFocusable(false);
         switch.setFocusableInTouchMode(false);*/
+
+        // TODO : StoreActivity에서 Intent 받기
+        Intent intent = getIntent();
+        if(!TextUtils.isEmpty(intent.getStringExtra("storeId"))){
+            intent.getExtras();
+
+        }
 
         arrayAdapter = new AdapterActivity();
 
