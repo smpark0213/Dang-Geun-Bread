@@ -30,9 +30,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +44,11 @@ import gachon.termproject.danggeun.Adapter.AdapterActivity;
 import gachon.termproject.danggeun.Cart_Receipt;
 import gachon.termproject.danggeun.R;
 import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Model.ReservatoinRequest;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Cart extends AppCompatActivity {
 
@@ -97,6 +106,7 @@ public class Cart extends AppCompatActivity {
         //앞 액티비티에서 받은 store 이름
         Bundle bundle = getIntent().getExtras();
         String storeName = bundle.getString("title");
+        String getStoreId = getIntent().getStringExtra("storeId");
         title = (TextView) findViewById(R.id.title);
         title.setText(storeName);
 
@@ -146,20 +156,49 @@ public class Cart extends AppCompatActivity {
         });
 
 
-        //예약하기 버튼 누르면 firestore에 올리기
+        // TODO : 예약하기 버튼 누르면 firestore에 올리기
         reserveBtn = (Button) findViewById(R.id.reserveBtn);
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //userId, storeId, time, breadList (breadId, count)
 
-                Intent toReceipt = new Intent(Cart.this, Cart_Receipt.class);
-                startActivity(toReceipt);
-                finish();
+                String userId = Firestore.getFirebaseUser().toString();
+                String storeId = getStoreId;
 
+                Calendar calendar = Calendar.getInstance();
+                Timestamp timestamp = null;
+
+                // 24시간제로 변환
+                int hour24 = hour;
+                if(am_pm.equals("오후")) hour24 += 12;
+
+                // yyyy-mm-dd hh:mm:ss
+                String reservationTime = calendar.get(Calendar.YEAR)+ "-" + month+ "-" + day+ " " + hour24+ ":" + minute + ":00";
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try{
+                    Date parsedData = dateFormat.parse(reservationTime);
+                    timestamp = new java.sql.Timestamp(parsedData.getTime());
+
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "예약 시간 변환 실패..", Toast.LENGTH_SHORT).show();
+                }
+                Firestore.addReservation(new ReservatoinRequest(userId, storeId, bread_list, timestamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "예약 성공", Toast.LENGTH_SHORT).show();
+                            Intent toReceipt = new Intent(Cart.this, Cart_Receipt.class);
+                            startActivity(toReceipt);
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "예약 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
-
-
     }
 
     //TimePicker 셋팅값 받아온 결과를 arrayAdapter에 추가
@@ -177,6 +216,7 @@ public class Cart extends AppCompatActivity {
 
             result = data.getStringExtra("date");
             date.setText("픽업 날짜:  "+result);
+            // 시간
 
             arrayAdapter.addItem(hour, minute, am_pm, month, day);
             arrayAdapter.notifyDataSetChanged();

@@ -109,6 +109,7 @@ public class StoreActivity extends AppCompatActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("title", intent.getStringExtra("title"));
                 toCart.putExtras(bundle2);
+                toCart.putExtra("storeId", sotreId);
                 startActivity(toCart);
                 finish();
             }
