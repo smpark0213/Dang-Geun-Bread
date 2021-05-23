@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="가게 이름"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textColor="@color/black"
                 android:id="@+id/title"/>
 

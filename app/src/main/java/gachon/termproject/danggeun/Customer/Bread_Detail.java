@@ -1,11 +1,8 @@
 package gachon.termproject.danggeun.Customer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,17 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import gachon.termproject.danggeun.LoginActivity;
 import gachon.termproject.danggeun.R;
-import io.grpc.InternalNotifyOnServerBuild;
 
 public class Bread_Detail extends AppCompatActivity {
 
@@ -31,13 +21,14 @@ public class Bread_Detail extends AppCompatActivity {
     private int totalPrice = 0;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
-    SharedPreferences sp;
+
 
     private String storeName;
     private String breadImg;
     private String breadName;
     private String breadPrice;
     private String maximum;
+    private ImageView breadIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +43,7 @@ public class Bread_Detail extends AppCompatActivity {
             }
         });
 
+
         //번들로 받아와야 하는 정보
         //빵사진, 빵이름, 가격, 최대수량
         //앞 액티비티에서 보낸 번들을 받음
@@ -64,33 +56,14 @@ public class Bread_Detail extends AppCompatActivity {
             breadPrice = bundle.getString("price");
             maximum = bundle.getString("maximum");
             //Toast.makeText(getApplicationContext(), breadImg, Toast.LENGTH_SHORT).show();
-
-
             //Toast.makeText(getApplicationContext(), breadName, Toast.LENGTH_SHORT).show();
-
         }
 
         //빵사진 파베 storage에 있는 빵 사진 가져와야함
         //주소?로 가져오는걸로 고쳐야 하는데
-        ImageView breadIV = (ImageView) findViewById(R.id.breadImageView);
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://dang-geun-bread.appspot.com");
-        StorageReference storageRef = storage.getReference();
-        storageRef.child("Bread/"+breadImg+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //성공시
-                Glide.with(getApplicationContext())
-                        .load(uri)
-                        .into(breadIV);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure (@NonNull Exception exception) {
-                //실패시
-                //Toast.makeText(getApplicationContext(), "이미지 로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
+        breadIV = findViewById(R.id.breadImageView);
+        sendImageRequest(breadImg, breadIV);
 
-            }
-        });
 
 
         //번들로 받은 빵 이름으로 변경해야함
@@ -168,6 +141,12 @@ public class Bread_Detail extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void sendImageRequest(String breadImg, ImageView breadIV) {
+
+        ImageLoadTask task = new ImageLoadTask(breadImg, breadIV);
+        task.execute();
     }
 
 
