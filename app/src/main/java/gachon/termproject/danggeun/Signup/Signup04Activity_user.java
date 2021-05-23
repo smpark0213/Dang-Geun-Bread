@@ -62,13 +62,12 @@ public class Signup04Activity_user extends AppCompatActivity {
                             Map<String, Object> user = new HashMap<>();
                             user.put("ID", ID);
                             user.put("nickname", nickname);
-                            user.put("isConsumer", false);
+                            user.put("isConsumer", true);
                             user.put("profileUrl", "None"); // 프로필 이미지 url
                             user.put("location", temp); // user위치
 
 
                             documentReference.set(user); // 데이터베이스에 정보 저장
-
 
 
                             startActivity(new Intent(getApplicationContext(), Signup05Activity.class));
