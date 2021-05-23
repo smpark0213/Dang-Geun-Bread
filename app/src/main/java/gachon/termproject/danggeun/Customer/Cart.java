@@ -194,7 +194,7 @@ public class Cart extends AppCompatActivity {
                         }catch (Exception e){
                             Toast.makeText(getApplicationContext(), "예약 시간 변환 실패..", Toast.LENGTH_SHORT).show();
                         }
-                        Firebase.addReservation(new ReservatoinRequest(userId, storeId, breadDTOArrayList, rT)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        Firebase.addReservation(new ReservatoinRequest(userId, storeId, breadDTOArrayList, rT, storeName)).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){

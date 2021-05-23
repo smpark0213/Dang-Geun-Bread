@@ -37,15 +37,25 @@ public class StoreActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     private AppCompatButton btn_reserve;
     private AppCompatTextView store_name;
-    private String sotreId;
+    private String storeId;
     SharedPreferences sp2;
     // 빵 리스트
     private static ArrayList<BreadDTO> breadList = new ArrayList<>();
+    private static String cartStoreId = null;
 
+    private void setCartStore(String sotreId){
+        cartStoreId = sotreId;
+    }
+
+    public static String getCartStore(){
+        return cartStoreId;
+    }
     public static void clearCart(){
         breadList.clear();
     }
-
+    public static boolean isCart(){
+        return !(breadList.isEmpty() || breadList.size() == 0);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -55,8 +65,8 @@ public class StoreActivity extends AppCompatActivity {
             BreadDTO returnBr = (BreadDTO) data.getSerializableExtra("toCart");
             Log.d("CART", "Bread name for cart : " + returnBr.getBreadName());
             breadList.add(returnBr);
+            setCartStore(storeId);
         }
-
     }
 
     @Override
@@ -72,8 +82,9 @@ public class StoreActivity extends AppCompatActivity {
         String textutils = sp2.getString("save2", "1");
 
         // intent null 체크
+        // 무조건 storeId가 있어야 접근 가능함!
         if(!TextUtils.isEmpty(intent.getStringExtra("id"))){
-            sotreId = intent.getStringExtra("id");
+            storeId = intent.getStringExtra("id");
             store_name.setText(intent.getStringExtra("title"));
         }
         else {
@@ -83,7 +94,7 @@ public class StoreActivity extends AppCompatActivity {
         save(textutils);
 
         // 현재 가게에서의 빵 list
-        Firebase.getBreadList(sotreId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Firebase.getBreadList(storeId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -125,7 +136,7 @@ public class StoreActivity extends AppCompatActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("title", intent.getStringExtra("title"));
                 toCart.putExtras(bundle2);
-                toCart.putExtra("storeId", sotreId);
+                toCart.putExtra("storeId", storeId);
                 toCart.putExtra("breadList", breadList);
                 startActivity(toCart);
                 finish();
