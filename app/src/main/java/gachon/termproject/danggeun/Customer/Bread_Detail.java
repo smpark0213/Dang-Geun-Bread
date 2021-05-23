@@ -23,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 
 import gachon.termproject.danggeun.LoginActivity;
 import gachon.termproject.danggeun.R;
+import io.grpc.InternalNotifyOnServerBuild;
 
 public class Bread_Detail extends AppCompatActivity {
 
@@ -92,7 +93,6 @@ public class Bread_Detail extends AppCompatActivity {
         });
 
 
-
         //번들로 받은 빵 이름으로 변경해야함
         TextView bread_name = (TextView) findViewById(R.id.breadName);
         bread_name.setText(breadName);
@@ -152,11 +152,19 @@ public class Bread_Detail extends AppCompatActivity {
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //파이어베이스에 올리기
+                BreadDTO br = new BreadDTO(breadName, breadPrice, Integer.toString(counter), Integer.toString(totalPrice));
+                Intent reIntent = new Intent();
+                reIntent.putExtra("toCart", br);
+                setResult(RESULT_OK, reIntent);
+                finish();
 
+                // RealTime DB 사용 안해도 됩니다!!
+                /*
                 databaseReference = firebaseDatabase.getReference("BreadList");
                 BreadDTO bread_dto = new BreadDTO(breadName, breadPrice, counter+"", totalPrice+"");
                 databaseReference.push().setValue(bread_dto);
                 finish();
+                 */
             }
         });
 

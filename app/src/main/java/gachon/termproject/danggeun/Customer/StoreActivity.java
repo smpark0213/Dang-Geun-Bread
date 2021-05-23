@@ -1,6 +1,7 @@
 package gachon.termproject.danggeun.Customer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -23,15 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ThrowOnExtraProperties;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import gachon.termproject.danggeun.Adapter.BreadAdpater;
 import gachon.termproject.danggeun.LoginActivity;
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 import gachon.termproject.danggeun.Util.Model.BreadInfo;
 
 public class StoreActivity extends AppCompatActivity {
@@ -40,17 +39,34 @@ public class StoreActivity extends AppCompatActivity {
     private AppCompatTextView store_name;
     private String sotreId;
     SharedPreferences sp2;
+    // 빵 리스트
+    private static ArrayList<BreadDTO> breadList = new ArrayList<>();
+
+    public static void clearCart(){
+        breadList.clear();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            BreadDTO returnBr = (BreadDTO) data.getSerializableExtra("toCart");
+            Log.d("CART", "Bread name for cart : " + returnBr.getBreadName());
+            breadList.add(returnBr);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
 
-
         store_name = findViewById(R.id.store_name);
         ArrayList<BreadInfo> breadInfos = new ArrayList<BreadInfo>();
         Intent intent = getIntent();
-
 
         sp2 = getSharedPreferences("sp2", MODE_PRIVATE);
         String textutils = sp2.getString("save2", "1");
@@ -67,7 +83,7 @@ public class StoreActivity extends AppCompatActivity {
         save(textutils);
 
         // 현재 가게에서의 빵 list
-        Firestore.getBreadList(sotreId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Firebase.getBreadList(sotreId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -110,11 +126,11 @@ public class StoreActivity extends AppCompatActivity {
                 bundle2.putString("title", intent.getStringExtra("title"));
                 toCart.putExtras(bundle2);
                 toCart.putExtra("storeId", sotreId);
+                toCart.putExtra("breadList", breadList);
                 startActivity(toCart);
                 finish();
             }
         });
-
     }
 
 
@@ -124,8 +140,6 @@ public class StoreActivity extends AppCompatActivity {
         editor.putString("save2", textutils);
         editor.commit();
     }
-
-
 
 
     //로그아웃 버튼 추가

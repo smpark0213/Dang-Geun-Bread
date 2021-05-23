@@ -3,6 +3,7 @@ package gachon.termproject.danggeun.Util;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -13,7 +14,7 @@ import java.util.Date;
 /**
  * Firestore 관렴 함수
  */
-public class Firestore {
+public class Firebase {
     /**
      * 현재 로그인한 유저 가져오기
      */
@@ -27,6 +28,10 @@ public class Firestore {
      *  */
     public static FirebaseFirestore getFirestoreInstance() {
         return FirebaseFirestore.getInstance();
+    }
+
+    public static FirebaseDatabase getFirebaseDatabaseInstance(){
+        return FirebaseDatabase.getInstance();
     }
 
 

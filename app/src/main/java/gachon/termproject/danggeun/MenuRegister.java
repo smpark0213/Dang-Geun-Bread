@@ -44,7 +44,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 import gachon.termproject.danggeun.Util.Model.BreadInfo;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 public class MenuRegister extends AppCompatActivity {
     ImageView iv, back;
@@ -53,7 +53,7 @@ public class MenuRegister extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseUser firebaseUser= Firestore.getFirebaseUser();
+    FirebaseUser firebaseUser= Firebase.getFirebaseUser();
     SharedPreferences sp;
     private String imagepath;
     private Uri downloadUri;

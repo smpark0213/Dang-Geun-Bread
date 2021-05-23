@@ -57,7 +57,7 @@ import java.util.Locale;
 import gachon.termproject.danggeun.LoginActivity;
 import gachon.termproject.danggeun.Util.Model.LocationInfo;
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 
 public class CustomerActivity extends AppCompatActivity
@@ -295,7 +295,7 @@ public class CustomerActivity extends AppCompatActivity
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             String markerTitle=marker.getTitle();
-            Firestore.getStoreInfo(markerTitle).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            Firebase.getStoreInfo(markerTitle).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {

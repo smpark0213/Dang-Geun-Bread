@@ -9,7 +9,7 @@ import gachon.termproject.danggeun.Customer.BreadDTO;
 public class ReservatoinRequest {
     private String userId;
     private String storeId;
-    // false = 예약 확인, true = 예약 취소
+    // false = 예약 취소, true = 예약 됨
     private boolean status;
     // 시간
     private com.google.firebase.Timestamp timestamp;
@@ -23,7 +23,7 @@ public class ReservatoinRequest {
     public ReservatoinRequest(String userId, String storeId, ArrayList<BreadDTO> breadArrayList, Timestamp timestamp){
         this.userId = userId;
         this.storeId = storeId;
-        this.status = false;
+        this.status = true;
         this.timestamp = timestamp;
         this.breadArrayList = breadArrayList;
     }
