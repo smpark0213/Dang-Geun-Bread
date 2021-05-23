@@ -698,6 +698,13 @@ public class CustomerActivity extends AppCompatActivity
                 return true ;
             // ...
             // ...
+
+            case R.id.menu_customer_reservation :
+                // TODO : 예약한 shopList
+                Intent shopListIntent = new Intent(getApplicationContext(), ReservationActivity.class);
+                startActivity(shopListIntent);
+                finish();
+                return true;
             default :
                 return super.onOptionsItemSelected(item) ;
         }

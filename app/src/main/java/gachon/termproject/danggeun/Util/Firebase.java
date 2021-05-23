@@ -12,7 +12,8 @@ import gachon.termproject.danggeun.Util.Model.ReservatoinRequest;
 import java.util.Date;
 
 /**
- * Firestore 관렴 함수
+ * Client mode에서 사용하는 Firestore 관렴 함수
+ * @author 정수연
  */
 public class Firebase {
     /**
@@ -30,17 +31,23 @@ public class Firebase {
         return FirebaseFirestore.getInstance();
     }
 
-    public static FirebaseDatabase getFirebaseDatabaseInstance(){
-        return FirebaseDatabase.getInstance();
-    }
-
-
     /**
      * 특정 가게 정보 가져오기
      */
     public static Task<QuerySnapshot> getStoreInfo(String marketTitle){
         return getFirestoreInstance().collection("ShopList").whereEqualTo("markerTitle",marketTitle).get();
     }
+    public static Task<DocumentSnapshot> getStorebyId(String storeId){
+        return getFirestoreInstance().collection("ShopList").document(storeId).get();
+    }
+    /**
+     * 모든 가게 가져오기
+     * @return
+     */
+    public static Task<QuerySnapshot> getStores(){
+        return getFirestoreInstance().collection("ShopList").get();
+    }
+
 
     /**
      * 특정 가게, 빵 list 가져오기
@@ -66,17 +73,11 @@ public class Firebase {
     }
 
     /**
-     * @author 최우석
+     * 예약 빵집 lsit
      */
+    public static Task<QuerySnapshot> getReservationShopList(String userId){
+        return getFirestoreInstance().collection("Reservation").whereEqualTo("userId",userId).get();
+    }
 
-    /**
-     * 예약 정보 가져오기 (User, arrary)
-     */
-
-    /**
-     * 사진 -> url
-     */
-
-    //관리자 버전's
 
 }

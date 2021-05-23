@@ -14,19 +14,26 @@ public class ReservatoinRequest {
     // 시간
     private com.google.firebase.Timestamp timestamp;
     private ArrayList<BreadDTO> breadArrayList;
+    private String storeName;
 
-    public static class ReservationBread{
-        private String breadId;
-        private int count;
-    }
-
-    public ReservatoinRequest(String userId, String storeId, ArrayList<BreadDTO> breadArrayList, Timestamp timestamp){
+    public ReservatoinRequest() { }
+    public ReservatoinRequest(String userId, String storeId, ArrayList<BreadDTO> breadArrayList, Timestamp timestamp, String storeName){
         this.userId = userId;
         this.storeId = storeId;
         this.status = true;
         this.timestamp = timestamp;
         this.breadArrayList = breadArrayList;
+        this.storeName = storeName;
     }
+
+    public ReservatoinRequest(String userId, String storeId, ArrayList<BreadDTO> breadArrayList, Timestamp timestamp, Boolean status){
+        this.userId = userId;
+        this.storeId = storeId;
+        this.status = status;
+        this.timestamp = timestamp;
+        this.breadArrayList = breadArrayList;
+    }
+
 
     public String getUserId() {
         return userId;
@@ -40,6 +47,8 @@ public class ReservatoinRequest {
     public ArrayList<BreadDTO> getBreadArrayList() {
         return breadArrayList;
     }
+    public String getStoreName() { return storeName; }
+
     public boolean isStatus() {
         return status;
     }

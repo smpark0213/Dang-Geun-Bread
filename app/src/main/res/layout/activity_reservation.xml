@@ -7,46 +7,26 @@
     tools:context=".Customer.ReservationActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/store_reservaton"
-        android:layout_width="wrap_content"
+        android:id="@+id/tx_reservation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="예약내역"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="예약할 가게 이름"
-        android:textSize="32sp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal" />
 
-    <!-- 여태 장바구니에 넣었던 빵 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reservation_bread_recycle"
-        android:layout_width="match_parent"
+        android:id="@+id/reservation_shop_recycle"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/store_reservaton"
-        app:layout_constraintBottom_toTopOf="@id/btn_pick_up_time"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@color/purple_500"
-        android:id="@+id/btn_pick_up_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_real_reservation"
+        app:layout_constraintTop_toBottomOf="@id/tx_reservation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="픽업 시간 선택"
-        />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@color/purple_500"
-        android:id="@+id/btn_real_reservation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="예약하기"/>
+        tools:listitem="@layout/items_shop"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
