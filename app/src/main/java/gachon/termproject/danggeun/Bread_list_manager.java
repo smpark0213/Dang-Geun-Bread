@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import gachon.termproject.danggeun.Adapter.FirstAdapter;
 import gachon.termproject.danggeun.Util.Model.BreadInfo;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 public class Bread_list_manager extends AppCompatActivity {
     //데이터베이스 선언
@@ -46,11 +46,11 @@ public class Bread_list_manager extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         //현재 유저목록 가져오기
-        FirebaseUser user = Firestore.getFirebaseUser();
+        FirebaseUser user = Firebase.getFirebaseUser();
         String userID=user.getUid();
         Log.v("사용자 id",userID);
         //BreadList 있는 data를 가져오기 위함.
-        Firestore.getBreadList(userID)
+        Firebase.getBreadList(userID)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

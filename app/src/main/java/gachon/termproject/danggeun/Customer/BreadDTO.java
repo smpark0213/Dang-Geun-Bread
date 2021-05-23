@@ -1,6 +1,8 @@
 package gachon.termproject.danggeun.Customer;
 
-public class BreadDTO {
+import java.io.Serializable;
+
+public class BreadDTO implements Serializable {
 
     private String BreadName;
     private String BreadPrice;

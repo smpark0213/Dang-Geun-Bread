@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Bread_list_manager;
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 import static gachon.termproject.danggeun.Util.others.isStorageUrl;
 
@@ -99,7 +99,7 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.freeViewHold
             //다이얼로그 띄우고 ok누르면 삭제
             String breadId= mDataset.get(position).getBreadId();
             Button deleteButton=cardView.findViewById(R.id.buttonDelete);
-            FirebaseFirestore db=Firestore.getFirestoreInstance();
+            FirebaseFirestore db= Firebase.getFirestoreInstance();
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

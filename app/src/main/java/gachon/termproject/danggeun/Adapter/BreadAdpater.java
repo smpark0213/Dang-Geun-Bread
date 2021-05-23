@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import gachon.termproject.danggeun.Util.Model.BreadInfo;
 import gachon.termproject.danggeun.Customer.Bread_Detail;
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 import static gachon.termproject.danggeun.Util.others.isStorageUrl;
 
@@ -62,7 +62,7 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
                     if(pos != RecyclerView.NO_POSITION){
                         Bundle bundle = new Bundle();
                         Log.d(BreadAdpater.this.getClass().toString(), "position = " + pos);
-                        Firestore.getBreadInfo(breadId.get(pos)).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        Firebase.getBreadInfo(breadId.get(pos)).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful()){

@@ -8,16 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import gachon.termproject.danggeun.Customer.CustomerActivity;
-import gachon.termproject.danggeun.Util.Firestore;
 import gachon.termproject.danggeun.Util.Model.StoreInfo;
 
 public class ManagerActivity extends AppCompatActivity {

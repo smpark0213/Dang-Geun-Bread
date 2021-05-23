@@ -22,7 +22,8 @@ public class TimePickerActivity extends AppCompatActivity {
     private int hour, minute;
     private String am_pm;
     private Date currentTime;
-    private String stYear, stMonth, stDay, date;
+    private String stYear, date;
+    private int stMonth, stDay;
     CalendarView calendarView;
 
     @Override
@@ -38,6 +39,8 @@ public class TimePickerActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 date = year+"년 "+(month + 1) + "월 " + dayOfMonth + "일";
+                stMonth = month;
+                stDay = dayOfMonth;
             }
         });
 
@@ -67,6 +70,8 @@ public class TimePickerActivity extends AppCompatActivity {
                 sendIntent.putExtra("minute", minute);
                 sendIntent.putExtra("am_pm", am_pm);
                 sendIntent.putExtra("date", date);
+                sendIntent.putExtra("stDay", stDay);
+                sendIntent.putExtra("stMonth", stMonth);
 
                 setResult(RESULT_OK, sendIntent);
                 finish();

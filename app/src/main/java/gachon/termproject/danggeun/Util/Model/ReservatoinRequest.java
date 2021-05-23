@@ -1,6 +1,7 @@
 package gachon.termproject.danggeun.Util.Model;
 
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
+
 import java.util.ArrayList;
 
 import gachon.termproject.danggeun.Customer.BreadDTO;
@@ -8,10 +9,10 @@ import gachon.termproject.danggeun.Customer.BreadDTO;
 public class ReservatoinRequest {
     private String userId;
     private String storeId;
-    // false = 예약 확인, true = 예약 취소
+    // false = 예약 취소, true = 예약 됨
     private boolean status;
     // 시간
-    private Timestamp timestamp;
+    private com.google.firebase.Timestamp timestamp;
     private ArrayList<BreadDTO> breadArrayList;
 
     public static class ReservationBread{
@@ -22,9 +23,9 @@ public class ReservatoinRequest {
     public ReservatoinRequest(String userId, String storeId, ArrayList<BreadDTO> breadArrayList, Timestamp timestamp){
         this.userId = userId;
         this.storeId = storeId;
-        this.breadArrayList = breadArrayList;
+        this.status = true;
         this.timestamp = timestamp;
-        this.status = false;
+        this.breadArrayList = breadArrayList;
     }
 
     public String getUserId() {
@@ -33,5 +34,13 @@ public class ReservatoinRequest {
     public String getStoreId() {
         return storeId;
     }
-
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+    public ArrayList<BreadDTO> getBreadArrayList() {
+        return breadArrayList;
+    }
+    public boolean isStatus() {
+        return status;
+    }
 }

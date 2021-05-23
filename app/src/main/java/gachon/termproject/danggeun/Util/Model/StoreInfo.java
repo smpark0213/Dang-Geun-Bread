@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 
 import gachon.termproject.danggeun.R;
-import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Firebase;
 
 public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
@@ -118,7 +118,7 @@ public class StoreInfo extends AppCompatActivity   implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         ////
 
-        FirebaseUser user = Firestore.getFirebaseUser();
+        FirebaseUser user = Firebase.getFirebaseUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(user.getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
