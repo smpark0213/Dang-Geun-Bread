@@ -42,11 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         EditText id = findViewById(R.id.login_editText_ID);
         EditText pw = findViewById(R.id.login_editText_PW);
 
-        // 이미 로그인한 경우 로그인 상태 유지
-        // 로그아웃시키고 싶으면 요기 주석하고 재실행하쉐여
+
         fAuth = FirebaseAuth.getInstance();
 
-
+        // 이미 로그인한 경우 로그인 상태 유지
+        // 로그아웃시키고 싶으면 요기 주석하고 재실행하쉐여
         if (fAuth.getCurrentUser() != null){
             setUserInfo();
         }
