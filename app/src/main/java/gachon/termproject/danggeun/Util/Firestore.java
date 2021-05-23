@@ -7,6 +7,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import gachon.termproject.danggeun.Util.Model.ReservatoinRequest;
+import java.util.Date;
+
 /**
  * Firestore 관렴 함수
  */
@@ -26,9 +29,6 @@ public class Firestore {
         return FirebaseFirestore.getInstance();
     }
 
-    /**
-     * 가게 list 가져오기
-     */
 
     /**
      * 특정 가게 정보 가져오기
@@ -44,11 +44,20 @@ public class Firestore {
         return getFirestoreInstance().collection("Bread").whereEqualTo("storeID", storeId).get();
     }
 
+
     /**
      * 특정 빵 정보 가져오기
      */
     public static Task<DocumentSnapshot> getBreadInfo(String breadId){
         return getFirestoreInstance().collection("Bread").document(breadId).get();
+    }
+
+    /**
+     * 예약 하기
+     */
+    public static Task<Void> addReservation(ReservatoinRequest request){
+        // userId + 현재 시간으로 documentID 생성
+        return getFirestoreInstance().collection("Reservation").document(request.getUserId() + System.currentTimeMillis()).set(request);
     }
 
     /**
