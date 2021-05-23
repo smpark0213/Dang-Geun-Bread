@@ -2,14 +2,27 @@ package gachon.termproject.danggeun;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import gachon.termproject.danggeun.Customer.CustomerActivity;
+import gachon.termproject.danggeun.Util.Firestore;
+import gachon.termproject.danggeun.Util.Model.StoreInfo;
 
 public class ManagerActivity extends AppCompatActivity {
 
+    FirebaseAuth fAuth;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
@@ -59,5 +72,33 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+    //로그아웃 버튼 추가
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    //로그아웃 구현
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout :
+                // TODO : process the click event for action_search item.
+                fAuth=FirebaseAuth.getInstance();
+                fAuth.signOut();
+                Intent intent = new Intent(ManagerActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                return true ;
+            // ...
+            // ...
+            default :
+                return super.onOptionsItemSelected(item) ;
+        }
     }
 }

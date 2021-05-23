@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import android.content.Intent;
 import android.os.Build;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Date;
+
+import gachon.termproject.danggeun.R;
 
 public class TimePickerActivity extends AppCompatActivity {
 
@@ -59,7 +61,7 @@ public class TimePickerActivity extends AppCompatActivity {
                 am_pm = AM_PM(hour);
                 hour = timeSet(hour);
 
-                Intent sendIntent = new Intent(gachon.termproject.danggeun.TimePickerActivity.this, Cart.class);
+                Intent sendIntent = new Intent(TimePickerActivity.this, Cart.class);
 
                 sendIntent.putExtra("hour", hour);
                 sendIntent.putExtra("minute", minute);

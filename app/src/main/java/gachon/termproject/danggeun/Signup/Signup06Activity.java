@@ -1,8 +1,11 @@
 package gachon.termproject.danggeun.Signup;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,7 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import gachon.termproject.danggeun.R;
@@ -72,6 +79,8 @@ public class Signup06Activity extends AppCompatActivity {
 
                                 String userID = fAuth.getCurrentUser().getUid();
                                 DocumentReference documentReference = fStore.collection("users").document(userID);
+                                DocumentReference documentReference1= fStore.collection("ShopList").document(userID);
+
 
                                 // 가입 유저 정보 맵에 모으기
                                 // 필요한 정보 더 추가 가능
@@ -85,7 +94,47 @@ public class Signup06Activity extends AppCompatActivity {
                                 user.put("closeTime", end);
                                 user.put("BakeryName", bakery);
 
+                                //가게 주소를 위도 경도로 바꾸고 ShopList에 저장
+                                String str=location;
+                                List<Address> addressList = null;
+                                try {
+                                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
+                                    addressList = geocoder.getFromLocationName(
+                                            str, // 주소
+                                            10); // 최대 검색 결과 개수
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                    Log.v("검색","?");
+                                    Toast.makeText(getApplicationContext(), "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                if(addressList.size()==0)
+                                { Toast.makeText(getApplicationContext(), "뒤로가서 주소를 다시 입력해주세요"+bakery, Toast.LENGTH_SHORT).show();
+                                    return;}
+
+                                System.out.println(addressList.get(0).toString());
+                                // 콤마를 기준으로 split
+                                String []splitStr = addressList.get(0).toString().split(",");
+                                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+                                System.out.println(address);
+
+                                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+                                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+                                System.out.println(latitude);
+                                System.out.println(longitude);
+
+                                // 좌표(위도, 경도) 생성
+                                LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                                Map<String,Object> shop=new HashMap<>();
+                                shop.put("markerTitle", bakery);
+                                shop.put("latLng", point);
+                                shop.put("markerSnippet", latitude.toString()+", "+ longitude.toString());
+
                                 documentReference.set(user); // 데이터베이스에 정보 저장
+                                documentReference1.set(shop);// 데이터베이스어 shop정보 저장
 
 
                                 Intent intent = new Intent(getApplicationContext(), Signup05Activity.class);

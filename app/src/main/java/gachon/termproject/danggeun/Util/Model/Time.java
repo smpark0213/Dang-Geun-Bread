@@ -1,4 +1,4 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Util.Model;
 
 public class Time {
     private int hour, minute;

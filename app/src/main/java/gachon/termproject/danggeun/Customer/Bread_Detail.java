@@ -1,12 +1,12 @@
-package gachon.termproject.danggeun;
+package gachon.termproject.danggeun.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,12 +21,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import gachon.termproject.danggeun.LoginActivity;
+import gachon.termproject.danggeun.R;
+
 public class Bread_Detail extends AppCompatActivity {
 
     private int counter = 1;
     private int totalPrice = 0;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    SharedPreferences sp;
 
     private String storeName;
     private String breadImg;
@@ -39,6 +43,14 @@ public class Bread_Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bread_detail);
 
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         //번들로 받아와야 하는 정보
         //빵사진, 빵이름, 가격, 최대수량
         //앞 액티비티에서 보낸 번들을 받음
@@ -50,16 +62,19 @@ public class Bread_Detail extends AppCompatActivity {
             breadName = bundle.getString("name");
             breadPrice = bundle.getString("price");
             maximum = bundle.getString("maximum");
-            Toast.makeText(getApplicationContext(), breadImg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), breadImg, Toast.LENGTH_SHORT).show();
+
+
             //Toast.makeText(getApplicationContext(), breadName, Toast.LENGTH_SHORT).show();
 
         }
 
         //빵사진 파베 storage에 있는 빵 사진 가져와야함
+        //주소?로 가져오는걸로 고쳐야 하는데
         ImageView breadIV = (ImageView) findViewById(R.id.breadImageView);
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://dang-geun-bread.appspot.com");
         StorageReference storageRef = storage.getReference();
-        storageRef.child("Photo/"+breadImg+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("Bread/"+breadImg+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //성공시
@@ -71,7 +86,7 @@ public class Bread_Detail extends AppCompatActivity {
             @Override
             public void onFailure (@NonNull Exception exception) {
                 //실패시
-                Toast.makeText(getApplicationContext(), "이미지 로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "이미지 로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -91,11 +106,12 @@ public class Bread_Detail extends AppCompatActivity {
         Button cartBtn = (Button) findViewById(R.id.cartBtn);
         TextView count = (TextView) findViewById(R.id.count);
 
+
+
         if (counter == 1) {
             totalPrice = Integer.parseInt(breadPrice);
             cartBtn.setText(String.valueOf(counter)+"개 담기       "+totalPrice+"원");
         }
-
 
 
         //수량 체크 버튼
@@ -118,7 +134,7 @@ public class Bread_Detail extends AppCompatActivity {
         ImageView plusBtn = (ImageView) findViewById(R.id.plus_btn);
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //수량+1 (최대수량 할꺼야?)
+            public void onClick(View v) { //수량+1
                 counter++;
                 if (counter <= Integer.parseInt(maximum)){
                     count.setText(String.valueOf(counter));
@@ -132,25 +148,19 @@ public class Bread_Detail extends AppCompatActivity {
             }
         });
 
-
         //카트에 담기
-        // 빵 이름, 빵 갯수, 총 가격
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //파이어베이스에 올리기
 
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-
-                bundle.putString("BreadName", breadName);
-                bundle.putInt("Count", counter);
-                bundle.putInt("TotalPrice", totalPrice);
-                intent.putExtras(bundle);
-
-                setResult(RESULT_OK, intent);
+                databaseReference = firebaseDatabase.getReference("BreadList");
+                BreadDTO bread_dto = new BreadDTO(breadName, breadPrice, counter+"", totalPrice+"");
+                databaseReference.push().setValue(bread_dto);
                 finish();
             }
         });
 
     }
+
+
 }
