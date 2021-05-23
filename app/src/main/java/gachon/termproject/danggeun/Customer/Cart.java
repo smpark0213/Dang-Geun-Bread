@@ -74,6 +74,8 @@ public class Cart extends AppCompatActivity {
     CartAdapter adapter;
     ArrayList<BreadDTO> bread_list = new ArrayList<BreadDTO>();
 
+    private int sMonth;
+    private int sDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,47 +158,56 @@ public class Cart extends AppCompatActivity {
         });
 
 
-        // TODO : 예약하기 버튼 누르면 firestore에 올리기
         reserveBtn = (Button) findViewById(R.id.reserveBtn);
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //userId, storeId, time, breadList (breadId, count)
 
-                String userId = Firestore.getFirebaseUser().toString();
+                String userId = Firestore.getFirebaseUser().getUid();
                 String storeId = getStoreId;
 
                 Calendar calendar = Calendar.getInstance();
                 Timestamp timestamp = null;
+                com.google.firebase.Timestamp rT = null;
 
-                // 24시간제로 변환
-                int hour24 = hour;
-                if(am_pm.equals("오후")) hour24 += 12;
+                if(am_pm != null){
+                    // 24시간제로 변환
+                    int hour24 = hour;
+                    if(am_pm.equals("오후")) hour24 += 12;
 
-                // yyyy-mm-dd hh:mm:ss
-                String reservationTime = calendar.get(Calendar.YEAR)+ "-" + month+ "-" + day+ " " + hour24+ ":" + minute + ":00";
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                try{
-                    Date parsedData = dateFormat.parse(reservationTime);
-                    timestamp = new java.sql.Timestamp(parsedData.getTime());
-
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "예약 시간 변환 실패..", Toast.LENGTH_SHORT).show();
-                }
-                Firestore.addReservation(new ReservatoinRequest(userId, storeId, bread_list, timestamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "예약 성공", Toast.LENGTH_SHORT).show();
-                            Intent toReceipt = new Intent(Cart.this, Cart_Receipt.class);
-                            startActivity(toReceipt);
-                            finish();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "예약 실패", Toast.LENGTH_SHORT).show();
-                        }
+                    // yyyy-mm-dd hh:mm:ss
+                    String reservationTime = calendar.get(Calendar.YEAR)+ "-" + sMonth+ "-" + sDay+ " " + hour24+ ":" + minute + ":00";
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    try{
+                        Log.d(getLocalClassName(), "In try block" + reservationTime);
+                        //Date parsedData = dateFormat.parse(reservationTime);
+                        //Log.d(getLocalClassName(), "parseData : " + String.valueOf(parsedData));
+                        timestamp = Timestamp.valueOf(reservationTime);
+                        rT = new com.google.firebase.Timestamp(timestamp);
+                        Log.d(getLocalClassName(), "Timestamp : "+ String.valueOf(timestamp));
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(), "예약 시간 변환 실패..", Toast.LENGTH_SHORT).show();
                     }
-                });
+                    Firestore.addReservation(new ReservatoinRequest(userId, storeId, bread_list, rT)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getApplicationContext(), "예약 성공", Toast.LENGTH_SHORT).show();
+                                Intent toReceipt = new Intent(Cart.this, Cart_Receipt.class);
+                                startActivity(toReceipt);
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(), "예약 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "시간을 선택해주세요", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -213,8 +224,11 @@ public class Cart extends AppCompatActivity {
             hour = data.getIntExtra("hour", 1);
             minute = data.getIntExtra("minute", 2);
             am_pm = data.getStringExtra("am_pm");
-
             result = data.getStringExtra("date");
+            sMonth = data.getIntExtra("stMonth", 1);
+            sDay = data.getIntExtra("stDay", 1);
+
+
             date.setText("픽업 날짜:  "+result);
             // 시간
 
