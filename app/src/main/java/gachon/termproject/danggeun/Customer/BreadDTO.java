@@ -13,14 +13,20 @@ public class BreadDTO implements Serializable {
     }
 
     public BreadDTO(String breadName, String breadPrice, String count, String totalPrice) {
-        BreadName = breadName;
-        BreadPrice = breadPrice;
-        Count = count;
-        TotalPrice = totalPrice;
+        this.BreadName = breadName;
+        this.BreadPrice = breadPrice;
+        this.Count = count;
+        this.TotalPrice = totalPrice;
     }
 
     public String getBreadName() {
-        return BreadName;
+        return this.BreadName;
+    }
+    public String getCount() {
+        return this.Count;
+    }
+    public String getTotalPrice() {
+        return this.TotalPrice;
     }
 
     public void setBreadName(String breadName) {
@@ -28,24 +34,17 @@ public class BreadDTO implements Serializable {
     }
 
     public String getBreadPrice() {
-        return BreadPrice;
+        return this.BreadPrice;
     }
 
     public void setBreadPrice(String breadPrice) {
         BreadPrice = breadPrice;
     }
 
-    public String getCount() {
-        return Count;
-    }
-
     public void setCount(String count) {
         Count = count;
     }
 
-    public String getTotalPrice() {
-        return TotalPrice;
-    }
 
     public void setTotalPrice(String totalPrice) {
         TotalPrice = totalPrice;

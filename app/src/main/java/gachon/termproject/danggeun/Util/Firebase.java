@@ -3,6 +3,7 @@ package gachon.termproject.danggeun.Util;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -10,8 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import gachon.termproject.danggeun.Util.Model.ReservatoinRequest;
 
 /**
- * Client mode에서 사용하는 Firestore 관렴 함수
- * @author 정수연
+ * Firestore 관렴 함수
  */
 public class Firebase {
     /**
@@ -28,6 +28,11 @@ public class Firebase {
     public static FirebaseFirestore getFirestoreInstance() {
         return FirebaseFirestore.getInstance();
     }
+
+    public static FirebaseDatabase getFirebaseDatabaseInstance(){
+        return FirebaseDatabase.getInstance();
+    }
+
 
     /**
      * 특정 가게 정보 가져오기
@@ -71,7 +76,7 @@ public class Firebase {
     }
 
     /**
-     * 예약 빵집 lsit
+     * @author 최우석
      */
     public static Task<QuerySnapshot> getReservationShopList(String userId){
         return getFirestoreInstance().collection("Reservation").whereEqualTo("userId",userId).get();
@@ -84,5 +89,20 @@ public class Firebase {
         return getFirestoreInstance().collection("Reservation").document(rId).update("status", false);
     }
 
+    /**
+     * 사진 -> url
+     */
+
+    //관리자 버전's
+
+    //가게에 예약된 리스트 가져오기
+    public static Task<QuerySnapshot> getReservation(String storeId) {
+        return getFirestoreInstance().collection("Reservation").whereEqualTo("storeId", storeId).get();
+    }
+
+    //유저 정보 가져오기
+    public static Task<DocumentSnapshot> getUser(String userId) {
+        return getFirestoreInstance().collection("user").document(userId).get();
+    }
 
 }

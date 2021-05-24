@@ -73,6 +73,7 @@ public class BreadAdpater extends RecyclerView.Adapter<BreadAdpater.ViewHolder> 
                                     bundle.putString("price", bread_price.getText().toString());
                                     bundle.putString("maximum", d.getData().get("count").toString());
 
+
                                     Intent intent = new Intent(context, Bread_Detail.class);
                                     intent.putExtras(bundle);
                                     //context.startActivity(intent);

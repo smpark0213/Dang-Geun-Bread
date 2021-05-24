@@ -44,6 +44,8 @@ public class ManagerActivity extends AppCompatActivity {
         iv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ManagerActivity.this, ReservationInfo_manager.class);
+                startActivity(intent);
 
             }
         });
