@@ -565,6 +565,7 @@ public class CustomerActivity extends AppCompatActivity
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
+        super.onRequestPermissionsResult(permsRequestCode,permissions,grandResults);
         if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면

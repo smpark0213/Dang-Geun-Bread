@@ -79,7 +79,9 @@ public class ReservationInfo_manager extends AppCompatActivity {
                             breadList.add(bread);
                         }
 
-                        reservationInfo_list.add(new ReservatoinRequest(userId,storeId,breadList,timestamp,storeName));
+                        if(status) {
+                            reservationInfo_list.add(new ReservatoinRequest(userId, storeId, breadList, timestamp, storeName));
+                        }
                     }
 
                     // 리사이클러뷰에 linearlayout 객체 지정

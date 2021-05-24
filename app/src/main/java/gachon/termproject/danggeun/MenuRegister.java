@@ -209,21 +209,7 @@ public class MenuRegister extends AppCompatActivity {
                             Log.v("사진 경로5", getPath(data.getData()));
                             geturi(uri);
 
-//                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                            db.collection("Bread").document(documentReference.getId()).update("photoUrl",downloadUri.toString())
-//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//                                            startToast("회원정보 등록을 성공하였습니다.");
-//                                        }
-//                                    })
-//                                    .addOnFailureListener(new OnFailureListener() {
-//                                        @Override
-//                                        public void onFailure(@NonNull Exception e) {
-//                                            startToast("회원정보 등록에 실패하였습니다.");
 //
-//                                        }
-//                                    });
                         } else {
                             Log.v("사진 경로6", getPath(data.getData()));
                             startToast("회원정보를 보내는데 실패하였습니다.");
