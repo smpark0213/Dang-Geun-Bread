@@ -3,13 +3,11 @@ package gachon.termproject.danggeun.Util;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import gachon.termproject.danggeun.Util.Model.ReservatoinRequest;
-import java.util.Date;
 
 /**
  * Client mode에서 사용하는 Firestore 관렴 함수
@@ -77,6 +75,13 @@ public class Firebase {
      */
     public static Task<QuerySnapshot> getReservationShopList(String userId){
         return getFirestoreInstance().collection("Reservation").whereEqualTo("userId",userId).get();
+    }
+
+    /**
+     * 예약 삭제 하기
+     */
+    public static Task<Void> updateReservationStatus(String rId){
+        return getFirestoreInstance().collection("Reservation").document(rId).update("status", false);
     }
 
 

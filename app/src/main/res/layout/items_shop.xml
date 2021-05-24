@@ -37,19 +37,6 @@
         app:layout_constraintStart_toEndOf="@id/tx_item_store_time"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/item_draw_shop"
-        android:src="@drawable/ic_baseline_shopping_cart_24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_marginLeft="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_item_store"
-        app:layout_constraintBottom_toBottomOf="@id/btn_item_store"/>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_item_store"
         tools:text="가게보기"
@@ -73,17 +60,19 @@
         app:layout_constraintTop_toTopOf="@id/btn_item_store"
         app:layout_constraintBottom_toBottomOf="@id/btn_item_store"
         app:layout_constraintStart_toEndOf="@id/btn_item_store"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/btn_item_cancel"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/item_draw_slit"
-        android:src="@drawable/ic__list_alt"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_margin="15dp"
+        android:id="@+id/btn_item_cancel"
+        android:text="예약취소"
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_marginRight="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_item_detail"
         app:layout_constraintTop_toTopOf="@id/btn_item_detail"
-        app:layout_constraintBottom_toBottomOf="@id/btn_item_detail"/>
+        app:layout_constraintBottom_toBottomOf="@id/btn_item_detail"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
